@@ -2875,39 +2875,39 @@
     <div class="slide-body">
       <div class="photo-grid">
         <div class="photo wide">
-          <img src="2026年5月2-6日 INTA2026年会  英国伦敦/06_现场照片/微信图片_2026-05-06_135609_901.jpg" alt="展位首日" loading="lazy">
+          <img src="微信图片_2026-05-06_135609_901.jpg" alt="展位首日" loading="lazy">
           <div class="cap">展位首日 · ExCeL London</div>
         </div>
         <div class="photo">
-          <img src="2026年5月2-6日 INTA2026年会  英国伦敦/06_现场照片/微信图片_20260509163735.jpg" alt="外所拜访" loading="lazy">
+          <img src="微信图片_20260509163735.jpg" alt="外所拜访" loading="lazy">
           <div class="cap">外所拜访 · 会后深度走访</div>
         </div>
         <div class="photo">
-          <img src="2026年5月2-6日 INTA2026年会  英国伦敦/06_现场照片/微信图片_2026-05-06_135701_463.jpg" alt="INTA 标志合影" loading="lazy">
+          <img src="微信图片_2026-05-06_135701_463.jpg" alt="INTA 标志合影" loading="lazy">
           <div class="cap">INTA 2026 · London</div>
         </div>
         <div class="photo">
-          <img src="2026年5月2-6日 INTA2026年会  英国伦敦/06_现场照片/微信图片_2026-05-06_135541_510.jpg" alt="客户洽谈" loading="lazy">
+          <img src="微信图片_2026-05-06_135541_510.jpg" alt="客户洽谈" loading="lazy">
           <div class="cap">客户洽谈</div>
         </div>
         <div class="photo">
-          <img src="2026年5月2-6日 INTA2026年会  英国伦敦/06_现场照片/微信图片_2026-05-06_135554_214.jpg" alt="国际同行交流" loading="lazy">
+          <img src="微信图片_2026-05-06_135554_214.jpg" alt="国际同行交流" loading="lazy">
           <div class="cap">国际同行交流</div>
         </div>
         <div class="photo">
-          <img src="2026年5月2-6日 INTA2026年会  英国伦敦/06_现场照片/微信图片_2026-05-06_135646_727.jpg" alt="重要客户接待" loading="lazy">
+          <img src="微信图片_2026-05-06_135646_727.jpg" alt="重要客户接待" loading="lazy">
           <div class="cap">重要客户接待</div>
         </div>
         <div class="photo">
-          <img src="2026年5月2-6日 INTA2026年会  英国伦敦/06_现场照片/微信图片_2026-05-06_135629_662.jpg" alt="展位值守" loading="lazy">
+          <img src="微信图片_2026-05-06_135629_662.jpg" alt="展位值守" loading="lazy">
           <div class="cap">展位值守</div>
         </div>
         <div class="photo">
-          <img src="2026年5月2-6日 INTA2026年会  英国伦敦/06_现场照片/微信图片_2026-05-06_135651_408.jpg" alt="海外客户洽谈" loading="lazy">
+          <img src="微信图片_2026-05-06_135651_408.jpg" alt="海外客户洽谈" loading="lazy">
           <div class="cap">海外客户洽谈</div>
         </div>
         <div class="photo">
-          <img src="2026年5月2-6日 INTA2026年会  英国伦敦/06_现场照片/微信图片_20260509162827.jpg" alt="外所合伙人晚宴" loading="lazy">
+          <img src="微信图片_20260509162827.jpg" alt="外所合伙人晚宴" loading="lazy">
           <div class="cap">外所合伙人晚宴 · 5 人深谈</div>
         </div>
       </div>
@@ -2953,25 +2953,4 @@
     window.addEventListener('scroll', () => {
       const h = document.documentElement;
       const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-      progressBar.style.width = pct + '%';
-    });
-  }
-  const animFills = document.querySelectorAll('.bd-row .rg-fill, .rg-stack .seg, .p2-region-row .fill');
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        const el = e.target;
-        const w = el.style.width;
-        if (!el.dataset.played) {
-          el.style.width = '0%';
-          requestAnimationFrame(() => { el.style.width = w; });
-          el.dataset.played = '1';
-        }
-      }
-    });
-  }, { threshold: 0.4 });
-  animFills.forEach(el => obs.observe(el));
-</script>
-
-</body>
-</html>
+      progressBar.style.width = 
