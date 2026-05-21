@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INTA 2026 · 大数据明细二级页 · 康信知识产权</title>
+<style>
+  :root {
+    --bg:        #F7F8FB;
+    --paper:     #FFFFFF;
+    --paper-2:   #FBFCFE;
+    --ink:       #1A1F36;
+    --ink-2:     #3C4660;
+    --muted:     #6E7A92;
+    --dim:       #97A1B5;
+    --line:      #E4E8F0;
+    --line-2:    #EEF1F6;
+    --accent:    #C8102E;
+    --accent-2:  #E13950;
+    --accent-bg: #FCE8EC;
+    --gold:      #B88936;
+    --gold-bg:   #FBF3E1;
+    --blue:      #1F4FA8;
+    --blue-bg:   #E8EFFA;
+    --green:     #15834A;
+    --green-bg:  #E2F4EA;
+    --shadow:    0 1px 2px rgba(20,30,60,.04), 0 4px 16px rgba(20,30,60,.05);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 32px;}
+
+  /* sticky topnav */
+  .topnav {
+    position: sticky; top: 0;
+    background: rgba(255,255,255,.94);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    z-index: 50;
+    padding: 14px 0;
+  }
+  .topnav .row { display: flex; align-items: center; gap: 20px; justify-content: space-between;}
+  .topnav .back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--ink-2);
+    text-decoration: none;
+    font-size: .88rem;
+    padding: 6px 14px;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    transition: all .15s;
+  }
+  .topnav .back:hover { background: var(--accent-bg); color: var(--accent); border-color: var(--accent);}
+  .topnav .title { font-size: .9rem; color: var(--ink); font-weight: 600; letter-spacing: 1px;}
+  .topnav .title strong { color: var(--accent); margin-right: 8px; font-weight: 800;}
+  .topnav .meta { color: var(--dim); font-size: .78rem; letter-spacing: 1px;}
+
+  /* hero */
+  .hero {
+    padding: 56px 0 36px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero .eyebrow { color: var(--accent); letter-spacing: 4px; font-size: .78rem; font-weight: 700; margin-bottom: 14px;}
+  .hero h1 {
+    font-size: 2.4rem; font-weight: 800; color: var(--ink);
+    line-height: 1.2; margin-bottom: 14px; letter-spacing: -.5px;
+  }
+  .hero p {
+    color: var(--muted); font-size: 1rem; line-height: 1.7; max-width: 800px;
+  }
+
+  /* TOC */
+  .toc {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin: 28px 0;
+  }
+  .toc a {
+    padding: 6px 14px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    color: var(--ink-2);
+    text-decoration: none;
+    font-size: .82rem;
+    transition: all .15s;
+  }
+  .toc a:hover { background: var(--accent-bg); color: var(--accent); border-color: var(--accent);}
+
+  /* section */
+  .sec {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 36px 40px;
+    box-shadow: var(--shadow);
+    margin-bottom: 28px;
+    scroll-margin-top: 80px;
+  }
+  .sec-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 14px; flex-wrap: wrap;
+    margin-bottom: 24px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--line-2);
+  }
+  .sec-head .lh { flex: 1; min-width: 260px;}
+  .sec-head .lh .eyebrow { color: var(--accent); letter-spacing: 3px; font-size: .72rem; font-weight: 700; text-transform: uppercase; margin-bottom: 6px;}
+  .sec-head .lh h2 {
+    font-size: 1.55rem; font-weight: 800; color: var(--ink);
+    line-height: 1.3; letter-spacing: -.3px;
+  }
+  .sec-head .lh .sub { color: var(--muted); font-size: .92rem; margin-top: 6px;}
+  .sec-head .pinned {
+    font-size: 2.2rem; font-weight: 800; color: var(--accent);
+    line-height: 1; letter-spacing: -1px;
+    white-space: nowrap;
+  }
+  .sec-head .pinned small { font-size: 1rem; color: var(--accent-2); margin-left: 4px;}
+
+  /* tables */
+  table.data {
+    width: 100%; border-collapse: collapse;
+    margin: 18px 0 12px;
+    background: var(--paper);
+  }
+  table.data th, table.data td {
+    text-align: left; padding: 11px 14px;
+    border-bottom: 1px solid var(--line-2);
+    font-size: .93rem;
+  }
+  table.data thead th {
+    background: var(--paper-2);
+    color: var(--dim);
+    font-size: .76rem;
+    letter-spacing: 2px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--line);
+  }
+  table.data td { color: var(--ink-2);}
+  table.data td.num {
+    text-align: right;
+    font-family: "SF Mono", Consolas, monospace;
+    color: var(--ink);
+    font-weight: 700;
+  }
+  table.data td.flag { width: 38px; font-size: 1.1rem; text-align: center;}
+  table.data td.rank {
+    width: 32px; text-align: center;
+    color: var(--muted); font-weight: 700; font-family: "SF Mono", Consolas, monospace;
+  }
+  table.data tr.highlight td { background: var(--accent-bg);}
+  table.data tr.highlight td.rank { color: var(--accent);}
+  table.data tr.highlight td:not(.num) strong { color: var(--accent);}
+  /* target row highlight when navigated via anchor */
+  table.data tr[id]:target td {
+    animation: target-pulse 2.4s ease-out;
+  }
+  table.data tr[id]:target {
+    scroll-margin-top: 100px;
+  }
+  @keyframes target-pulse {
+    0%   { background: #FCE8EC; box-shadow: inset 4px 0 0 var(--accent);}
+    60%  { background: #FCE8EC; box-shadow: inset 4px 0 0 var(--accent);}
+    100% { background: transparent; box-shadow: inset 0 0 0 transparent;}
+  }
+  table.data td .tag {
+    display: inline-block;
+    padding: 2px 8px; margin-left: 6px;
+    background: var(--accent-bg); color: var(--accent);
+    border-radius: 4px;
+    font-size: .68rem; font-weight: 700; letter-spacing: 1px;
+  }
+  table.data td em { color: var(--muted); font-style: normal; font-size: .85rem; display:block; margin-top:2px;}
+
+  /* inline citation refs */
+  a.cite {
+    display: inline-flex;
+    align-items: center;
+    min-width: 22px; height: 18px;
+    padding: 0 6px;
+    margin: 0 2px;
+    background: var(--accent-bg);
+    color: var(--accent);
+    border: 1px solid #F5BCC6;
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: .68rem;
+    font-weight: 700;
+    vertical-align: middle;
+    transition: all .15s;
+    line-height: 1;
+  }
+  a.cite:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  a.cite.est {
+    background: var(--gold-bg);
+    color: var(--gold);
+    border-color: #EEDDB6;
+  }
+  a.cite.est:hover {
+    background: var(--gold);
+    color: #fff;
+    border-color: var(--gold);
+  }
+  /* highlight when source row is targeted */
+  .sources ol li[id]:target {
+    background: var(--accent-bg);
+    border-radius: 6px;
+    padding-left: 36px;
+    margin-left: -4px;
+    animation: src-pulse 2.2s ease-out;
+  }
+  @keyframes src-pulse {
+    0%   { background: #FCE8EC;}
+    70%  { background: #FCE8EC;}
+    100% { background: transparent;}
+  }
+  .sources ol li {
+    scroll-margin-top: 100px;
+  }
+  /* mini-legend showing citation key */
+  .cite-legend {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin: 14px 0 18px;
+    padding: 10px 14px;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: .8rem;
+  }
+  .cite-legend .ll-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--muted);
+  }
+  .cite-legend .ll-sample {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 22px; height: 18px;
+    padding: 0 6px;
+    background: var(--accent-bg);
+    color: var(--accent);
+    border: 1px solid #F5BCC6;
+    border-radius: 4px;
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: .68rem;
+    font-weight: 700;
+  }
+  .cite-legend .ll-sample.est {
+    background: var(--gold-bg);
+    color: var(--gold);
+    border-color: #EEDDB6;
+  }
+  /* method box */
+  .method {
+    margin-top: 16px;
+    padding: 16px 20px;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    border-left: 3px solid var(--gold);
+  }
+  .method h4 {
+    color: var(--gold);
+    font-size: .8rem;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .method p {
+    color: var(--ink-2);
+    font-size: .88rem;
+    line-height: 1.7;
+  }
+
+  /* trajectory */
+  .trajectory {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+    margin: 18px 0;
+  }
+  .traj-step {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px 18px;
+    position: relative;
+  }
+  .traj-step .date { color: var(--dim); font-size: .74rem; letter-spacing: 1px; font-weight: 600;}
+  .traj-step .val {
+    color: var(--accent); font-size: 1.8rem; font-weight: 800;
+    line-height: 1; margin-top: 6px; letter-spacing: -.5px;
+  }
+  .traj-step .desc { color: var(--ink-2); font-size: .82rem; margin-top: 8px; line-height: 1.5;}
+
+  /* notes / quotes */
+  .note {
+    margin: 16px 0;
+    padding: 14px 18px;
+    background: var(--accent-bg);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    color: var(--ink-2);
+    font-size: .9rem;
+    line-height: 1.7;
+  }
+  .note strong { color: var(--accent);}
+  .note.gold { background: var(--gold-bg); border-left-color: var(--gold);}
+  .note.gold strong { color: var(--gold);}
+  .note.blue { background: var(--blue-bg); border-left-color: var(--blue);}
+  .note.blue strong { color: var(--blue);}
+
+  /* sources */
+  .sources {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin: 24px 0 60px;
+  }
+  .sources h3 { color: var(--ink); font-size: 1.05rem; margin-bottom: 14px; font-weight: 700;}
+  .sources ol {
+    list-style: none; counter-reset: s;
+  }
+  .sources ol li {
+    counter-increment: s;
+    padding: 8px 0 8px 32px;
+    border-bottom: 1px dashed var(--line);
+    color: var(--ink-2);
+    line-height: 1.6;
+    position: relative;
+    font-size: .9rem;
+  }
+  .sources ol li:last-child { border-bottom: none;}
+  .sources ol li::before {
+    content: "[" counter(s) "]";
+    position: absolute; left: 0; top: 8px;
+    color: var(--accent); font-weight: 700;
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: .82rem;
+  }
+  .sources a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--accent);
+  }
+  .sources a:hover { background: var(--accent-bg);}
+  .sources .meta { color: var(--dim); font-size: .8rem; display: block; margin-top: 2px;}
+
+  /* bars / breakdown row */
+  .bd-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 80px 70px;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .bd-row:last-child { border-bottom: none;}
+  .bd-row .name { color: var(--ink); font-weight: 600;}
+  .bd-row .track { height: 14px; background: var(--line-2); border-radius: 7px; overflow: hidden;}
+  .bd-row .fill { height: 100%; border-radius: 7px;}
+  .bd-row .count { text-align: right; font-family: "SF Mono", Consolas, monospace; color: var(--ink); font-weight: 700;}
+  .bd-row .pct { text-align: right; color: var(--accent); font-weight: 700; font-family: "SF Mono", Consolas, monospace; font-size: .9rem;}
+
+  /* footer */
+  footer {
+    padding: 32px 0;
+    border-top: 1px solid var(--line);
+    color: var(--dim);
+    font-size: .82rem;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 760px) {
+    .wrap { padding: 0 18px;}
+    .sec { padding: 24px 22px;}
+    .trajectory { grid-template-columns: 1fr 1fr;}
+    .sec-head .pinned { font-size: 1.6rem;}
+    .hero h1 { font-size: 1.7rem;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap row">
+    <a class="back" href="INTA2026_总结汇报_浅色版.html#sec-bigdata">← 返回总结汇报</a>
+    <div class="title"><strong>康信</strong>INTA 2026 · 大数据明细</div>
+    <div class="meta">SECONDARY VIEW</div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="eyebrow">DATA DETAIL PAGE</div>
+    <h1>INTA 2026 大数据 · 具体数字明细</h1>
+    <p>
+      这是配合主汇报《INTA 2026 总结分享会》的二级数据页。每一组数字都给出原始口径、子项拆解，以及公开来源链接，供分享会上交叉对照与会后追溯。
+    </p>
+    <p style="margin-top: 12px;">
+      文中所有数据点都附有可点击的引用编号：
+      <a class="cite" href="#src-l1" style="position:static; margin: 0 4px;">L1</a> 系列指向<strong>公开来源</strong>（INTA / Leaders League / Anaqua / USPTO / 行业媒体）；
+      <a class="cite est" href="#src-e1" style="position:static; margin: 0 4px;">E1</a> 系列指向<strong>康信内部估算</strong>（含完整方法说明），不可对外引用为官方数据。
+    </p>
+
+    <div class="toc">
+      <a href="#d-9800">9,800+ 注册人</a>
+      <a href="#d-145">145 司法管辖区</a>
+      <a href="#d-top5">Top 5 司法管辖区</a>
+      <a href="#d-region">地区分布 35/26/22/17</a>
+      <a href="#d-882">882 企业法务</a>
+      <a href="#d-507">507 家企业</a>
+      <a href="#d-199">199 政府代表</a>
+      <a href="#d-148">148 届 · 历史脉络</a>
+      <a href="#d-themes">三大主题</a>
+      <a href="#sources">完整来源</a>
+    </div>
+  </section>
+
+  <!-- 9,800+ -->
+  <section id="d-9800" class="sec">
+    <div class="sec-head">
+      <div class="lh">
+        <div class="eyebrow">REGISTRATION GROWTH</div>
+        <h2>注册参会人数：9,800+ · 怎么涨上来的</h2>
+        <p class="sub">从 1 月预登记到 5 月开幕，是一条清晰的"加速带"</p>
+      </div>
+      <div class="pinned">9,800<small>+</small></div>
+    </div>
+
+    <div class="cite-legend">
+      <span class="ll-tag"><span class="ll-sample">L1</span> Leaders League 2026.05.02</span>
+      <span class="ll-tag"><span class="ll-sample">L4</span> PR Newswire 2026.01.15</span>
+      <span class="ll-tag"><span class="ll-sample">L9</span> INTA 官方 Instagram</span>
+      <span class="ll-tag"><span class="ll-sample">L10</span> Muck Rack · INTA Bulletin</span>
+      <span class="ll-tag"><span class="ll-sample">L7</span> Marks &amp; Clerk</span>
+    </div>
+
+    <div class="trajectory">
+      <div class="traj-step">
+        <div class="date">2026.01.15</div>
+        <div class="val">9,000+</div>
+        <div class="desc">INTA 官方开放注册首日，预登记已突破 9,000，被官方称为"record-breaking start"。 <a class="cite" href="#src-l4">L4</a></div>
+      </div>
+      <div class="traj-step">
+        <div class="date">2026.02</div>
+        <div class="val">~5,000</div>
+        <div class="desc">INTA Instagram 公布"#INTA2026 已破 5,000 注册"，覆盖约 125 个司法管辖区。<a class="cite" href="#src-l9">L9</a></div>
+      </div>
+      <div class="traj-step">
+        <div class="date">2026.04.15</div>
+        <div class="val">9,000+</div>
+        <div class="desc">Muck Rack 转发 INTA Bulletin：注册数超过 9,000，进入"会前冲刺期"。<a class="cite" href="#src-l10">L10</a></div>
+      </div>
+      <div class="traj-step">
+        <div class="date">2026.05.02</div>
+        <div class="val">9,800+</div>
+        <div class="desc">Leaders League 开幕日现场报道：9,800+ 注册人，145 个司法管辖区，<strong style="color:var(--accent);">创历史新高</strong>。<a class="cite" href="#src-l1">L1</a></div>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>口径备注 ——</strong>
+      9,800+ 是开幕首日（5/2）官方披露口径 <a class="cite" href="#src-l1">L1</a>。Marks &amp; Clerk 等会员所引用的"<strong>10,000+ top IP professionals</strong>" <a class="cite" href="#src-l7">L7</a> 是会期累计 + 同期会外活动估算口径，与官方注册口径不完全相同；本汇报统一使用 9,800+ 注册数 + 10,000+ 可触达专业人士两条平行表达。
+    </div>
+  </section>
+
+  <!-- 145 jurisdictions -->
+  <section id="d-145" class="sec">
+    <div class="sec-head">
+      <div class="lh">
+        <div class="eyebrow">JURISDICTIONS COVERED</div>
+        <h2>145 个司法管辖区 · 全球覆盖</h2>
+        <p class="sub">从 2026.02 的 125 到 5/2 的 145，新增约 20 个新兴 IP 体系</p>
+      </div>
+      <div class="pinned">145</div>
+    </div>
+
+    <table class="data">
+      <thead>
+        <tr><th>时间节点</th><th>司法管辖区数</th><th>说明</th><th>出处</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>2026.02 · 5,000 注册</td><td class="num">~125</td><td>INTA Instagram 现场播报口径</td><td><a class="cite" href="#src-l9">L9</a></td></tr>
+        <tr><td>2026.04 · 9,500 注册</td><td class="num">100+</td><td>INTA 官方"already passed 100+ jurisdictions"</td><td><a class="cite" href="#src-l9">L9</a></td></tr>
+        <tr class="highlight"><td><strong>2026.05.02 · 9,800 注册</strong></td><td class="num"><strong>145</strong></td><td>Leaders League 现场披露 · 含 WIPO 全部成员体系</td><td><a class="cite" href="#src-l1">L1</a></td></tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:14px; color:var(--ink-2); line-height:1.75; font-size:.93rem;">
+      145 个司法管辖区覆盖 6 大洲：欧洲（EU 27 国 + EFTA + Brexit 后 UK + 巴尔干 + 俄白等）、北美（US + CA + 墨西哥 + 加勒比）、亚太（含中东欧亚一带 + ASEAN10 + 大洋洲 + 日韩印中）、拉美（巴西 / 阿根廷 / 智利 / 哥伦比亚 / 秘鲁等）、非洲（南非 / 尼日利亚 / 肯尼亚 + OAPI 17 国法语区）、中东（GCC 6 国 + 以色列 + 土耳其）。
+    </p>
+
+    <div class="note gold">
+      <strong>对康信的判断 ——</strong>
+      145 这个数字意味着<strong>欧洲 + 中东 + 非洲</strong>的"周边司法体系"代表都到场了。这是康信的<strong>OAPI / GCC / Israel / Turkey</strong> 涉外业务最容易在 INTA 现场对接到当地代理的窗口。
+    </div>
+  </section>
+
+  <!-- TOP 5 jurisdictions -->
+  <section id="d-top5" class="sec">
+    <div class="sec-head">
+      <div class="lh">
+        <div class="eyebrow">TOP 5 REPRESENTED JURISDICTIONS</div>
+        <h2>Top 5 代表司法管辖区 · INTA 官方逐国数字</h2>
+        <p class="sub">前 3 名为 INTA 官方披露的<strong style="color:var(--accent);">具体人数</strong> <a class="cite" href="#src-l12">L12</a>；后 2 名（DE/IN）仅有排名 <a class="cite" href="#src-l1">L1</a></p>
+      </div>
+    </div>
+
+    <div class="cite-legend">
+      <span class="ll-tag"><span class="ll-sample">L12</span> Law.asia 引用 INTA 官方 — US / UK / CN 具体人数</span>
+      <span class="ll-tag"><span class="ll-sample">L1</span> Leaders League — Top 5 完整排名</span>
+      <span class="ll-tag"><span class="ll-sample">L6</span> USPTO Director Squires 现场致辞</span>
+      <span class="ll-tag"><span class="ll-sample est">E1</span> 康信估算 — DE / IN 人数（INTA 未公布）</span>
+    </div>
+
+    <table class="data">
+      <thead>
+        <tr>
+          <th class="rank">#</th>
+          <th class="flag"></th>
+          <th>司法管辖区</th>
+          <th>到场人数</th>
+          <th>占总数</th>
+          <th>判读 / 信号</th>
+          <th>出处</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id="d-top5-us">
+          <td class="rank">1</td>
+          <td class="flag">🇺🇸</td>
+          <td><strong>United States</strong><em>USPTO 局长 Squires 亲自到场致辞 · 北美核心市场</em></td>
+          <td class="num"><strong style="color:var(--accent);">2,101</strong></td>
+          <td class="num">21.4 %</td>
+          <td>长期第一 · 不受东道主影响</td>
+          <td><a class="cite" href="#src-l12">L12</a><a class="cite" href="#src-l6">L6</a></td>
+        </tr>
+        <tr id="d-top5-uk">
+          <td class="rank">2</td>
+          <td class="flag">🇬🇧</td>
+          <td><strong>United Kingdom</strong><em>主场效应 · 几乎所有 UK Top 30 所派出代表团</em></td>
+          <td class="num"><strong style="color:var(--accent);">757</strong></td>
+          <td class="num">7.7 %</td>
+          <td>主场红利 · 远超非主场年份</td>
+          <td><a class="cite" href="#src-l12">L12</a></td>
+        </tr>
+        <tr id="d-top5-cn" class="highlight">
+          <td class="rank">3</td>
+          <td class="flag">🇨🇳</td>
+          <td><strong>China</strong><em>跻身 Top 3 · 中国所 + 中国企业 IP 团队双线到场<span class="tag">康信现场</span></em></td>
+          <td class="num"><strong style="color:var(--accent);">597</strong></td>
+          <td class="num">6.1 %</td>
+          <td>历史最高 · Haier 集团 Wang 当选 INTA 董事会成员</td>
+          <td><a class="cite" href="#src-l12">L12</a></td>
+        </tr>
+        <tr id="d-top5-de">
+          <td class="rank">4</td>
+          <td class="flag">🇩🇪</td>
+          <td><strong>Germany</strong><em>欧洲第二极 · 专利与品牌并重</em></td>
+          <td class="num">≈ 400 – 550</td>
+          <td class="num">~5 %</td>
+          <td>欧洲 35% 占比的主要构成</td>
+          <td><a class="cite" href="#src-l1">L1</a><a class="cite est" href="#src-e1">E1</a></td>
+        </tr>
+        <tr id="d-top5-in">
+          <td class="rank">5</td>
+          <td class="flag">🇮🇳</td>
+          <td><strong>India</strong><em>新兴市场跃升 · 跨境侵权 / 仿冒议题最热 · APAC 占比 ~20%</em></td>
+          <td class="num">≈ 350 – 500</td>
+          <td class="num">~4 %</td>
+          <td>2025 年印度占 APAC 注册 20% <a class="cite" href="#src-l12">L12</a></td>
+          <td><a class="cite" href="#src-l1">L1</a><a class="cite" href="#src-l12">L12</a><a class="cite est" href="#src-e1">E1</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      <strong>📌 重大更新 ——</strong>
+      Top 3（US / UK / CN）的具体人数现已由 INTA 通过 Law.asia <a class="cite" href="#src-l12">L12</a> 正式披露，
+      为 <strong>2,101 / 757 / 597</strong>。原来的康信估算（≈2,000-2,300 / 1,200-1,500 / 800-1,000）方向正确但 UK / CN 高估，
+      实际<strong>中国占比为 6.1%</strong>（不是 9%），UK 主场效应也较为温和。这说明：海外所对中国市场关注度依然受限于 Top 3 排名，<strong>实际接触面比想象的窄</strong>，
+      康信必须主动出击对接而非被动等待。
+    </div>
+
+    <div class="method">
+      <h4>📐 E1 · DE / IN 人数估算方法（INTA 未公布）</h4>
+      <p>
+        Law.asia [L12] 只披露了 Top 3 具体人数（合计 3,455 人，占 9,800 的 35.3%）。德国 / 印度只有排名信息，未公布人数。
+        康信内部估算方法：① 取 Leaders League [L1] 的地区分布（欧洲 35% / 亚太 22%）；② 扣除已确认的 UK 757 / China 597 余量；
+        ③ 参照 INTA《Member Directory》各国会员占比（DE ≈ 6-7%、IN ≈ 4-5%）；④ 参照 Bharath（INTA 董事）"印度位列 Top 5 注册量"的口径 <a class="cite" href="#src-l12">L12</a>。
+        <strong style="color:var(--gold);">DE / IN 人数为康信内部估算，请勿对外引用为官方数据。</strong>
+      </p>
+    </div>
+
+    <div class="note gold">
+      <strong>对康信的判断 ——</strong>
+      "中国 800-1,000 人"意味着<strong>本届中国所之间的现场密度也是历史最高</strong>。康信展位与其他中国所的差异化定位（涉外专利 + 国际销售 + 双语团队）在伦敦现场显得尤为关键。
+    </div>
+  </section>
+
+  <!-- Region split -->
+  <section id="d-region" class="sec">
+    <div class="sec-head">
+      <div class="lh">
+        <div class="eyebrow">REGIONAL BREAKDOWN</div>
+        <h2>地区分布 · 35/26/22/17 折算成绝对值</h2>
+        <p class="sub">百分比为 INTA 官方公布 <a class="cite" href="#src-l1">L1</a> · 绝对值为康信折算 <a class="cite est" href="#src-e2">E2</a></p>
+      </div>
+    </div>
+
+    <div class="bd-row">
+      <span class="name">欧洲</span>
+      <div class="track"><div class="fill" style="width:100%; background:linear-gradient(90deg,#C8102E,#E13950);"></div></div>
+      <span class="count">≈ 3,430</span>
+      <span class="pct">35 %</span>
+    </div>
+    <div class="bd-row">
+      <span class="name">北美</span>
+      <div class="track"><div class="fill" style="width:74%; background:linear-gradient(90deg,#1F4FA8,#3A6FD0);"></div></div>
+      <span class="count">≈ 2,548</span>
+      <span class="pct">26 %</span>
+    </div>
+    <div class="bd-row">
+      <span class="name">亚太</span>
+      <div class="track"><div class="fill" style="width:63%; background:linear-gradient(90deg,#B88936,#D5A754);"></div></div>
+      <span class="count">≈ 2,156</span>
+      <span class="pct">22 %</span>
+    </div>
+    <div class="bd-row">
+      <span class="name">其它地区<em style="color:var(--muted); font-style:normal; font-size:.78rem; font-weight:400; display:block;">拉美 + 非洲 + 中东</em></span>
+      <div class="track"><div class="fill" style="width:48%; background:linear-gradient(90deg,#6E7A92,#97A1B5);"></div></div>
+      <span class="count">≈ 1,666</span>
+      <span class="pct">17 %</span>
+    </div>
+
+    <div class="note blue">
+      <strong>计算 ——</strong>
+      9,800 × 35% = 3,430（欧洲）；× 26% = 2,548（北美）；× 22% = 2,156（亚太）；× 17% = 1,666（其它）。合计 9,800。
+      百分比 <a class="cite" href="#src-l1">L1</a> · 折算方法 <a class="cite est" href="#src-e2">E2</a>。
+    </div>
+  </section>
+
+  <!-- 882 corporate -->
+  <section id="d-882" class="sec">
+    <div class="sec-head">
+      <div class="lh">
+        <div class="eyebrow">CORPORATE COUNSEL ATTENDEES</div>
+        <h2>882 位企业法务到场 · 这是 INTA 的"客户密度"</h2>
+        <p class="sub">来自 507 家不同企业 <a class="cite" href="#src-l1">L1</a> · 既是行业风向，也是潜在直接客户</p>
+      </div>
+      <div class="pinned">882</div>
+    </div>
+
+    <p style="color:var(--ink-2); line-height:1.75; font-size:.95rem; margin-bottom:16px;">
+      INTA 是少数能在现场看到<strong>事务所 + 企业法务 + 政府监管</strong>三方同台的会议 <a class="cite" href="#src-l1">L1</a>。本届 882 位企业法务的体量，
+      意味着每 11 位注册者中就有 1 位是企业内部 IP 决策人 —— 这是事务所 BD（含康信）一年中最高效的窗口期。
+    </p>
+
+    <table class="data">
+      <thead>
+        <tr><th>行业</th><th>到场企业代表（摘录自 L1）</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>科技 / 互联网</td><td><strong>Amazon · Apple · ByteDance · Tencent · Meta · Microsoft · Huawei · HP · Qualcomm · Uber · Expedia</strong></td><td>含 4 家中国头部品牌 <a class="cite" href="#src-l1">L1</a></td></tr>
+        <tr><td>消费 / 奢侈品</td><td>Chanel · Starbucks · Unilever · Fortnum &amp; Mason · Johnston of Elgin</td><td>欧洲老牌品牌密集 <a class="cite" href="#src-l1">L1</a></td></tr>
+        <tr><td>医药 / 健康</td><td>Johnson &amp; Johnson · Novartis</td><td>专利+商标双线 IP 团队 <a class="cite" href="#src-l1">L1</a></td></tr>
+        <tr><td>制造 / 工业</td><td>Haier · BAE Systems · Rolls-Royce · Ericsson · Maersk</td><td>含 1 家中国头部品牌（海尔）<a class="cite" href="#src-l1">L1</a></td></tr>
+        <tr><td>烟草</td><td>British American Tobacco</td><td>反假冒诉讼大户 <a class="cite" href="#src-l1">L1</a></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note gold">
+      <strong>对康信的判断 ——</strong>
+      表中<strong>4 家中国头部企业（字节、腾讯、华为、海尔）</strong>到场，意味着他们的海外 IP 团队同时在现场。康信涉外专利与商标团队应在 D+30 内梳理与这些企业的已有触点 + 推动潜在合作。
+    </div>
+  </section>
+
+  <!-- 507 organizations -->
+  <section id="d-507" class="sec">
+    <div class="sec-head">
+      <div class="lh">
+        <div class="eyebrow">CORPORATE ORGANIZATIONS</div>
+        <h2>507 家不同企业 · 平均每家派出 1.74 人</h2>
+        <p class="sub">企业数 INTA 披露 <a class="cite" href="#src-l1">L1</a> · 哑铃结构观察为康信团队整理</p>
+      </div>
+      <div class="pinned">507</div>
+    </div>
+
+    <p style="color:var(--ink-2); line-height:1.75; font-size:.95rem;">
+      882 位企业法务 ÷ 507 家企业 ≈ 每家平均 1.74 人 <a class="cite" href="#src-l1">L1</a>。背后是典型的"哑铃结构"——
+    </p>
+    <ul style="margin: 14px 0 18px 22px; color:var(--ink-2); line-height:1.85; font-size:.93rem;">
+      <li>头部跨国企业（Apple / Amazon / Microsoft / Tencent 等）派出 5-10 人专项 IP 团；</li>
+      <li>中型企业（消费品 / 制药 / 工业）派出 2-3 人，覆盖商标 + 专利 + 反假冒；</li>
+      <li>大量中小企业仅派 IP 负责人单人参会 —— 这部分是<strong>最容易在展位前停下来对话</strong>的目标人群。</li>
+    </ul>
+
+    <div class="note">
+      <strong>动作建议 ——</strong>
+      会后名片回流时，按"单人参会" vs "团队参会"做分层标记。单人到场的中小企业 IP 负责人，是康信 SaaS 平台 + 标准化服务的最佳 PMF 客户。
+    </div>
+  </section>
+
+  <!-- 199 gov -->
+  <section id="d-199" class="sec">
+    <div class="sec-head">
+      <div class="lh">
+        <div class="eyebrow">GOVERNMENT REPRESENTATIVES</div>
+        <h2>199 位政府监管代表 · INTA 的"政策天线"</h2>
+        <p class="sub">总数披露 <a class="cite" href="#src-l1">L1</a> · USPTO 局长 Squires 现场致辞有公开记录 <a class="cite" href="#src-l6">L6</a></p>
+      </div>
+      <div class="pinned">199</div>
+    </div>
+
+    <p style="color:var(--ink-2); line-height:1.75; font-size:.95rem;">
+      199 位代表 <a class="cite" href="#src-l1">L1</a> 分布在四大类机构：商标局（USPTO、EUIPO、CNIPA、JPO、UKIPO 等）、海关与执法部门、WIPO 系统、各国法院与司法机构。这意味着 INTA 不只是商业聚会，也是<strong>政策风向标</strong>——
+      AI 商标审查、跨境侵权、平台治理这些议题都会从这个现场进入下一年立法节奏。
+    </p>
+
+    <table class="data">
+      <thead>
+        <tr><th>主要到场监管机构</th><th>到场代表</th><th>出处</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>USPTO · 美国专利商标局</td><td><strong>Director John Squires</strong> 亲自致辞（2026.05.04）</td><td><a class="cite" href="#src-l6">L6</a></td></tr>
+        <tr><td>EUIPO · 欧盟知识产权局</td><td>多位审查员 + 商标政策官员</td><td><a class="cite" href="#src-l1">L1</a></td></tr>
+        <tr><td>WIPO · 世界知识产权组织</td><td>马德里体系 + 海牙体系部门</td><td><a class="cite" href="#src-l1">L1</a></td></tr>
+        <tr><td>CNIPA · 中国国家知识产权局</td><td>历届均派代表 · 涉外审查处</td><td><a class="cite" href="#src-l1">L1</a></td></tr>
+        <tr><td>其他</td><td>UKIPO · JPO · KIPO · IP Australia · 各国海关</td><td><a class="cite" href="#src-l1">L1</a></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note blue">
+      <strong>对康信的判断 ——</strong>
+      199 位监管代表的现场互动是<strong>"非客户但极有价值"</strong>的资源 —— 他们决定康信涉外业务下一年的"游戏规则"。建议本届有现场互动的代表，由资深合伙人在 D+60 内做一次远程跟进。
+    </div>
+  </section>
+
+  <!-- 148th history -->
+  <section id="d-148" class="sec">
+    <div class="sec-head">
+      <div class="lh">
+        <div class="eyebrow">148 YEARS · HISTORICAL CONTEXT</div>
+        <h2>第 148 届年会 · INTA 的"历史脉络"</h2>
+        <p class="sub">从 1878 年纽约起家，到 2026 年伦敦 ExCeL —— 148 年延续</p>
+      </div>
+      <div class="pinned">148<small>th</small></div>
+    </div>
+
+    <table class="data">
+      <thead>
+        <tr><th>届次</th><th>年份</th><th>主办城市</th><th>注册人数</th><th>备注</th><th>出处</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>148<sup>th</sup></td><td>2026</td><td><strong>伦敦 ExCeL</strong></td><td class="num">9,800+</td><td><strong style="color:var(--accent);">本届 · 创纪录</strong></td><td><a class="cite" href="#src-l1">L1</a><a class="cite" href="#src-l3">L3</a></td></tr>
+        <tr><td>147<sup>th</sup></td><td>2025</td><td>圣地亚哥 (US)</td><td class="num">~9,000</td><td>北美主场</td><td><a class="cite" href="#src-l11">L11</a><a class="cite est" href="#src-e3">E3</a></td></tr>
+        <tr><td>146<sup>th</sup></td><td>2024</td><td>亚特兰大 (US)</td><td class="num">~8,500</td><td>"后疫情完全恢复"年</td><td><a class="cite" href="#src-l11">L11</a><a class="cite est" href="#src-e3">E3</a></td></tr>
+        <tr><td>145<sup>th</sup></td><td>2023</td><td>新加坡</td><td class="num">~7,000</td><td>近年唯一驻亚太</td><td><a class="cite" href="#src-l11">L11</a><a class="cite est" href="#src-e3">E3</a></td></tr>
+        <tr><td>144<sup>th</sup></td><td>2022</td><td>华盛顿 (US)</td><td class="num">~6,500</td><td>疫情后首次线下完整年</td><td><a class="cite" href="#src-l11">L11</a><a class="cite est" href="#src-e3">E3</a></td></tr>
+      </tbody>
+    </table>
+
+    <p style="color:var(--ink-2); line-height:1.75; font-size:.93rem; margin-top: 12px;">
+      INTA 自 1878 年成立以来年会从未中断（仅在疫情期间转为线上）。本届伦敦是 2023 新加坡之后<strong>第三次驻欧洲</strong>（前两次分别为巴塞罗那 2019、阿姆斯特丹 2014）。下届（2027）将回到北美，伦敦的"主场窗口"对中国所而言<strong>下次再有可能要等到 2031+</strong>。
+    </p>
+  </section>
+
+  <!-- Three themes -->
+  <section id="d-themes" class="sec">
+    <div class="sec-head">
+      <div class="lh">
+        <div class="eyebrow">THREE DEFINING THEMES</div>
+        <h2>大会三大主题 · 来自 Anaqua 的会前议程拆解</h2>
+        <p class="sub">议程是 INTA 自己排的 · 它代表了行业未来 12-18 个月的优先级</p>
+      </div>
+    </div>
+
+    <table class="data">
+      <thead>
+        <tr><th>主题</th><th>代表场次</th><th>本届新信号</th><th>出处</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>① AI 进入运营现实</strong></td>
+          <td>
+            • AI &amp; IP: Intersection of Law and Technology<span class="tag">SOLD OUT</span><br>
+            • AI-First Legal Leadership in In-House Teams<br>
+            • Avoid costly IP pitfalls: patent due diligence
+          </td>
+          <td>AI 从"我们要不要做"变成"我们怎么部署"</td>
+          <td><a class="cite" href="#src-l2">L2</a><a class="cite" href="#src-l5">L5</a></td>
+        </tr>
+        <tr>
+          <td><strong>② IP 进入董事会</strong></td>
+          <td>
+            • IP value at the C-Suite level<br>
+            • Communicating Strategic Importance<br>
+            • ADIDAS 案例分享
+          </td>
+          <td>事务所语言从"案件数"切换到"业务价值"</td>
+          <td><a class="cite" href="#src-l2">L2</a></td>
+        </tr>
+        <tr>
+          <td><strong>③ 运营效率系统化</strong></td>
+          <td>
+            • Trademark Year in Review<span class="tag">PART 1+2</span><br>
+            • Pinsent Masons · AI for Trademark Workflows<br>
+            • Cross-team Collaboration
+          </td>
+          <td>"少人 · 高量 · 快交付"成为事务所新标准</td>
+          <td><a class="cite" href="#src-l2">L2</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note gold">
+      <strong>对康信的判断 ——</strong>
+      三大主题本质上是说：（1）<strong>AI 必须可视化为产品</strong>；（2）<strong>沟通必须切换到业务语言</strong>；（3）<strong>团队必须以系统而非以人为单位扩张</strong>。这三件事是 2027 INTA 之前康信内部要补齐的硬指标。
+    </div>
+  </section>
+
+  <!-- SOURCES -->
+  <section id="sources" class="sources">
+    <h3>📚 完整数据来源 · 点击在新页面打开</h3>
+    <p style="color:var(--muted); font-size:.86rem; margin-bottom:14px; line-height:1.65;">
+      文中所有数据点旁的 <a class="cite" style="position:static;">L1</a>、<a class="cite" style="position:static;">A1</a>、<a class="cite est" style="position:static;">E1</a> 等编号即对应下列来源；标 <strong style="color:var(--gold);">E</strong> 系列的为估算口径，文末有方法说明。
+    </p>
+    <ol>
+      <li id="src-l1">
+        <a href="https://www.leadersleague.com/en/news/inta-2026-london-a-record-breaking-gathering-signals-strong-global-ip-momentum" target="_blank" rel="noopener noreferrer">[L1] Leaders League《INTA 2026 London: A Record-Breaking Gathering Signals Strong Global IP Momentum》</a>
+        <span class="meta">发布日期：2026.05.02 · 含 9,800+ / 145 jurisdictions / 882 corporate / 507 organizations / 199 government / 地区分布 / Top 5 司法管辖区 / 企业代表名单</span>
+      </li>
+      <li id="src-l2">
+        <a href="https://www.anaqua.com/resource/inta-2026-cheat-sheet-the-sessions-you-dont-want-to-miss/" target="_blank" rel="noopener noreferrer">[L2] Anaqua《INTA 2026 Cheat Sheet: The Sessions You Don't Want to Miss》</a>
+        <span class="meta">发布日期：2026.04.20 · 三大主题（AI / C-Suite / 运营效率）原始来源 + 重点场次列表 + "AI &amp; IP" 售罄信息</span>
+      </li>
+      <li id="src-l3">
+        <a href="https://www.inta.org/annual-meeting/" target="_blank" rel="noopener noreferrer">[L3] INTA 官网 · 2026 Annual Meeting</a>
+        <span class="meta">官方注册披露页 · 第 148 届年会 · 伦敦 ExCeL · 5月2-6日</span>
+      </li>
+      <li id="src-l4">
+        <a href="https://www.prnewswire.com/news-releases/inta-opens-registration-for-its-2026-annual-meeting" target="_blank" rel="noopener noreferrer">[L4] PR Newswire《INTA Opens Registration for its 2026 Annual Meeting》(2026.01.15)</a>
+        <span class="meta">注册开放首日数据 · "record number of pre-registrations"</span>
+      </li>
+      <li id="src-l5">
+        <a href="https://www.managingip.com/article/trademarks/weekly-take-what-we-learned-from-inta-2026" target="_blank" rel="noopener noreferrer">[L5] Managing Intellectual Property《Weekly take: What we learned from INTA 2026》</a>
+        <span class="meta">行业媒体 · AI 话题主导本届会议的现场观察</span>
+      </li>
+      <li id="src-l6">
+        <a href="https://www.uspto.gov/about-us/news-updates/remarks-director-squires-inta-2026-annual-meeting" target="_blank" rel="noopener noreferrer">[L6] USPTO · Remarks by Director Squires at INTA 2026 (2026.05.04)</a>
+        <span class="meta">美国专利商标局长官方致辞 · 大会现场记录</span>
+      </li>
+      <li id="src-l7">
+        <a href="https://www.marks-clerk.com/insights/events/2026/inta-2026-annual-meeting" target="_blank" rel="noopener noreferrer">[L7] Marks &amp; Clerk · INTA 2026 Annual Meeting</a>
+        <span class="meta">"10,000+ top IP professionals" 累计可触达口径</span>
+      </li>
+      <li id="src-l8">
+        <a href="https://asiaiplaw.com/article/inta-2026-geoeconomic-confrontation-extreme-weather-events" target="_blank" rel="noopener noreferrer">[L8] Asia IP《INTA 2026: Geoeconomic confrontation, extreme weather, societal polarization》(2026.05.04)</a>
+        <span class="meta">亚太视角现场报道 · 宏观风险与品牌挑战</span>
+      </li>
+      <li id="src-l12">
+        <a href="https://law.asia/ai-deepfakes-asian-trademark-protection-inta-2026/" target="_blank" rel="noopener noreferrer">[L12] Law.asia《AI, deepfakes and Asian trademark protection at INTA 2026》(2026.05.02)</a>
+        <span class="meta">含 INTA 官方公布 Top 5 司法管辖区<strong style="color:var(--accent);">具体到场人数</strong>：US 2,101 / UK 757 / China 597；含 Haier 集团 IP 负责人 Jianguo Wang（INTA 董事会成员）观点</span>
+      </li>
+      <li id="src-l13">
+        <a href="https://www.inta.org/news-and-press/press-releases/" target="_blank" rel="noopener noreferrer">[L13] INTA 2026-2029 战略规划 · 官方披露</a>
+        <span class="meta">含 INTA 2025.02 关于深度伪造（Deepfakes/Digital Replicas）的董事会决议</span>
+      </li>
+      <li id="src-l9">
+        <a href="https://www.instagram.com/intaglobal/" target="_blank" rel="noopener noreferrer">[L9] INTA 官方 Instagram @intaglobal · 注册进度系列播报</a>
+        <span class="meta">"5,000 registrants · 125 jurisdictions"（2026.02）/ "9,500 · 100+ jurisdictions"（2026.04）等阶段性公告</span>
+      </li>
+      <li id="src-l10">
+        <a href="https://muckrack.com/media-outlet/inta" target="_blank" rel="noopener noreferrer">[L10] Muck Rack · INTA Bulletin (2026.04.15)</a>
+        <span class="meta">"Registrations have surpassed 9,000" 中段披露口径</span>
+      </li>
+      <li id="src-l11">
+        <a href="https://www.inta.org/about/past-annual-meetings/" target="_blank" rel="noopener noreferrer">[L11] INTA 官网 · Past Annual Meetings 历史档案</a>
+        <span class="meta">2022-2025 历届主办城市与注册人数（部分历史数据由 INTA 官网与 PR Newswire 联合披露）</span>
+      </li>
+      <li id="src-e1" style="background: var(--gold-bg); border-radius: 6px; padding-left: 36px; margin-left: -4px;">
+        <strong style="color:var(--gold);">[E1] 康信内部估算 · Top 5 司法管辖区逐国到场人数</strong>
+        <span class="meta">
+          <strong>方法：</strong>(1) 取 Leaders League [L1] 公布的 Top 5 排名顺序为锚；
+          (2) 用 [L1] 的地区分布 35/26/22/17 作为绝对值上限；
+          (3) 参照 INTA《Member Directory》各国会员数比例（US ≈ 45% / UK ≈ 12% / CN ≈ 7-9% / DE ≈ 6-7% / IN ≈ 4-5%）；
+          (4) 主场国 UK 因主场效应上调 30-40%；
+          (5) 给出范围而非单点。
+          <strong style="color:var(--gold);">本估算仅供内部分享会参考，请勿对外引用为官方数据。</strong>
+        </span>
+      </li>
+      <li id="src-e2" style="background: var(--gold-bg); border-radius: 6px; padding-left: 36px; margin-left: -4px;">
+        <strong style="color:var(--gold);">[E2] 康信内部估算 · 地区分布折算成绝对值</strong>
+        <span class="meta">
+          <strong>方法：</strong>用 Leaders League [L1] 公布的 9,800+ 注册数 × 35/26/22/17 百分比直接折算。
+          为对齐表达便于报告使用，约整到个位。原始百分比由 INTA 官方披露。
+        </span>
+      </li>
+      <li id="src-e3" style="background: var(--gold-bg); border-radius: 6px; padding-left: 36px; margin-left: -4px;">
+        <strong style="color:var(--gold);">[E3] 康信内部估算 · 历届年会注册人数</strong>
+        <span class="meta">
+          <strong>方法：</strong>2023 新加坡、2024 亚特兰大、2025 圣地亚哥的注册数来自历年 INTA 公开新闻稿和 PR Newswire；
+          其中部分年份 INTA 仅披露"approximately"口径，此处取媒体引用最广的整数。
+          [L11] [L4] 综合参考。
+        </span>
+      </li>
+    </ol>
+  </section>
+
+  <footer>
+    KANGXIN PARTNERS · 国际销售 &amp; 品牌部 · 2026.05 · <a href="INTA2026_总结汇报_浅色版.html#sec-bigdata" style="color:var(--accent); text-decoration:none;">← 返回总结汇报主页面</a>
+  </footer>
+
+</div>
+
+</body>
+</html>
+      

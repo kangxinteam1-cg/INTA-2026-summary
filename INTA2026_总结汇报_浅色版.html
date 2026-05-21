@@ -1,0 +1,2955 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INTA 2026 总结分享会 · 康信知识产权</title>
+<style>
+  :root {
+    --bg:        #F7F8FB;
+    --paper:     #FFFFFF;
+    --paper-2:   #FBFCFE;
+    --ink:       #1A1F36;
+    --ink-2:     #3C4660;
+    --muted:     #6E7A92;
+    --dim:       #97A1B5;
+    --line:      #E4E8F0;
+    --line-2:    #EEF1F6;
+    --accent:    #C8102E;       /* Kangxin Red */
+    --accent-2:  #E13950;
+    --accent-bg: #FCE8EC;
+    --gold:      #B88936;
+    --gold-bg:   #FBF3E1;
+    --blue:      #1F4FA8;
+    --blue-bg:   #E8EFFA;
+    --green:     #15834A;
+    --green-bg:  #E2F4EA;
+    --shadow:    0 1px 2px rgba(20,30,60,0.04), 0 4px 16px rgba(20,30,60,0.05);
+    --shadow-2:  0 2px 6px rgba(20,30,60,0.06), 0 12px 32px rgba(20,30,60,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+
+  .deck {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-top: 64px; /* offset for sticky nav */
+  }
+
+  .slide {
+    position: relative;
+    width: 100%;
+    padding: 60px 56px 80px;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    scroll-margin-top: 70px;
+  }
+
+  /* subtle divider between sections instead of top strip */
+  .slide + .slide {
+    border-top: 1px solid var(--line-2);
+  }
+  .slide::before {
+    content: none;
+  }
+
+  /* header */
+  .slide-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 3vh; padding-bottom: 1.6vh; border-bottom: 1px solid var(--line);
+  }
+  .eyebrow {
+    color: var(--accent);
+    font-size: .72rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: .9vh;
+  }
+  .slide-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -.5px;
+    line-height: 1.15;
+  }
+  .slide-subtitle {
+    color: var(--muted);
+    margin-top: .8vh;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+  .pagenum {
+    color: var(--dim);
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: .78rem;
+    letter-spacing: 2px;
+  }
+  .slide-body { display: flex; flex-direction: column; }
+
+  /* ============ COVER ============ */
+  .cover {
+    padding: 80px 56px 70px;
+    background:
+      radial-gradient(1200px 600px at 100% 0%, rgba(200,16,46,.06), transparent 60%),
+      radial-gradient(900px 500px at 0% 100%, rgba(184,137,54,.06), transparent 60%),
+      var(--paper);
+  }
+  .cover-top {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 70px;
+  }
+  .brand { letter-spacing: 6px; color: var(--ink-2); font-size: .9rem; font-weight: 500;}
+  .brand strong { color: var(--accent); margin-right: 8px; font-weight: 800;}
+  .badge {
+    border: 1px solid var(--line);
+    background: var(--paper);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: .72rem;
+    color: var(--muted);
+    letter-spacing: 2px;
+  }
+  .cover-eyebrow {
+    color: var(--accent);
+    letter-spacing: 6px;
+    font-size: .9rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .cover-title {
+    font-size: 4.2rem;
+    font-weight: 800;
+    line-height: 1.08;
+    margin-bottom: 28px;
+    letter-spacing: -1.5px;
+    color: var(--ink);
+  }
+  .cover-title .accent { color: var(--accent);}
+  .cover-sub {
+    font-size: 1.25rem;
+    color: var(--muted);
+    line-height: 1.55;
+    max-width: 780px;
+    font-weight: 400;
+  }
+  .cover-meta {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+    margin-top: 60px;
+    padding-top: 28px; border-top: 1px solid var(--line);
+  }
+  .cover-meta .label { font-size: .72rem; color: var(--dim); letter-spacing: 3px; margin-bottom: 6px; text-transform: uppercase;}
+  .cover-meta .value { font-size: 1.05rem; color: var(--ink); font-weight: 600;}
+
+  /* cover 章节列表 · 编辑风排版 */
+  .cover-toc {
+    display: flex; flex-direction: column;
+    max-width: 1040px;
+    margin: 40px 0 0;
+  }
+  .toc-row {
+    display: grid;
+    grid-template-columns: 88px auto 1fr;
+    align-items: center;
+    gap: 28px;
+    padding: 22px 6px;
+    border-top: 1px solid var(--line);
+    transition: background .18s, padding-left .18s;
+  }
+  .toc-row:last-child { border-bottom: 1px solid var(--line);}
+  .toc-row:hover { background: var(--paper-2); padding-left: 14px;}
+  .toc-row .num {
+    font-family: "Times New Roman", "Source Han Serif SC", "Songti SC", Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 2.6rem;
+    line-height: 1;
+    color: var(--accent);
+    letter-spacing: -2px;
+    text-align: left;
+  }
+  .toc-row .lbl {
+    font-size: 1.28rem;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+  .toc-row .desc {
+    font-size: 1.04rem;
+    color: var(--muted);
+    line-height: 1.5;
+    padding-left: 22px;
+    border-left: 2px solid var(--line-2);
+    letter-spacing: .3px;
+  }
+  @media (max-width: 900px) {
+    .toc-row { grid-template-columns: 64px 1fr; row-gap: 6px;}
+    .toc-row .desc { grid-column: 1 / -1; padding-left: 0; border-left: 0;}
+    .toc-row .num { font-size: 2rem;}
+  }
+
+  /* ============ NOTICE CARD (slide 2) ============ */
+  .notice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    flex: 1;
+  }
+  .info-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px 30px;
+    box-shadow: var(--shadow);
+    display: flex; flex-direction: column;
+  }
+  .info-card .head {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 18px;
+    padding-bottom: 14px; border-bottom: 1px dashed var(--line);
+  }
+  .info-card .head .icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--accent-bg); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 1.1rem;
+  }
+  .info-card .head .ttl {
+    font-size: 1.05rem; font-weight: 700; color: var(--ink); letter-spacing: 1px;
+  }
+  .info-card .body { color: var(--ink-2); line-height: 1.85; font-size: 1rem;}
+  .info-card .body strong { color: var(--ink); font-weight: 700;}
+  .info-card .body .big {
+    color: var(--accent); font-size: 1.6rem; font-weight: 800; letter-spacing: .5px; display: block; margin: 4px 0 6px;
+  }
+  .info-card .body .row { display: flex; gap: 10px; padding: 6px 0;}
+  .info-card .body .row .k {color: var(--dim); width: 90px; font-size: .9rem; flex-shrink:0;}
+  .info-card .body .row .v {color: var(--ink-2);}
+
+  /* ============ AGENDA TABLE ============ */
+  .agenda-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--paper);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-top: 1vh;
+  }
+  .agenda-table th, .agenda-table td {
+    text-align: left;
+    padding: 14px 18px;
+    font-size: .95rem;
+  }
+  .agenda-table thead th {
+    background: var(--paper-2);
+    color: var(--dim);
+    font-weight: 600;
+    font-size: .8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--line);
+  }
+  .agenda-table tbody tr { border-bottom: 1px solid var(--line-2);}
+  .agenda-table tbody tr:last-child { border-bottom: none;}
+  .agenda-table tbody tr:hover { background: var(--paper-2);}
+  .agenda-table td.dur {
+    color: var(--accent); font-weight: 700; font-family: "SF Mono", Consolas, monospace; width: 100px;
+  }
+  .agenda-table td.step {
+    color: var(--ink); font-weight: 600; width: 220px;
+  }
+  .agenda-table td.detail { color: var(--ink-2); line-height: 1.5;}
+
+  .prep-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    margin-top: 2.5vh;
+  }
+  .prep-card {
+    background: var(--gold-bg);
+    border: 1px solid #EEDDB6;
+    border-left: 3px solid var(--gold);
+    border-radius: 10px;
+    padding: 16px 20px;
+  }
+  .prep-card h4 { color: var(--gold); font-size: .85rem; letter-spacing: 2px; margin-bottom: 6px; font-weight: 700;}
+  .prep-card p { color: var(--ink-2); font-size: .95rem; line-height: 1.6;}
+
+  /* ============ KPI GRID ============ */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-bottom: 2.5vh;
+  }
+  .kpi {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px 26px;
+    box-shadow: var(--shadow);
+    position: relative;
+    transition: all .25s;
+  }
+  .kpi:hover { box-shadow: var(--shadow-2); transform: translateY(-2px); }
+  .kpi::before {
+    content: "";
+    position: absolute; top: 0; left: 26px;
+    width: 36px; height: 3px;
+    background: var(--accent);
+    border-radius: 0 0 3px 3px;
+  }
+  .kpi .num {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: -1.5px;
+    display: flex; align-items: baseline;
+  }
+  .kpi .unit { font-size: 1rem; color: var(--accent); margin-left: 5px; font-weight: 600;}
+  .kpi .lbl { color: var(--ink-2); font-size: .95rem; margin-top: 12px; line-height: 1.4;}
+  .kpi .sub { color: var(--dim); font-size: .8rem; margin-top: 6px;}
+
+  /* tagline */
+  .tagline {
+    background: linear-gradient(135deg, var(--paper) 0%, var(--paper-2) 100%);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+    padding: 26px 32px;
+    box-shadow: var(--shadow);
+  }
+  .tagline .q {
+    font-size: 1.45rem;
+    line-height: 1.55;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .tagline .q .accent { color: var(--accent); font-weight: 700;}
+  .tagline .attrib { color: var(--dim); font-size: .8rem; margin-top: 10px; letter-spacing: 2px;}
+
+  /* ============ TWO-COL ============ */
+  .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 40px;}
+  .col h3 {
+    font-size: 1rem; color: var(--accent); margin-bottom: 1.5vh;
+    letter-spacing: 1px; font-weight: 700;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .col h3::before { content: ""; width: 4px; height: 16px; background: var(--accent); border-radius: 2px;}
+  .col p { color: var(--ink-2); font-size: 1rem; line-height: 1.75; margin-bottom: 1.2vh;}
+  .col p strong { color: var(--ink);}
+  .col ul { list-style: none;}
+  .col ul li {
+    color: var(--ink-2); font-size: .98rem;
+    padding: 10px 0 10px 24px;
+    position: relative; line-height: 1.55;
+    border-bottom: 1px dashed var(--line);
+  }
+  .col ul li::before {
+    content: "▸"; color: var(--accent);
+    position: absolute; left: 0; top: 10px; font-size: .9rem;
+  }
+  .col ul li strong { color: var(--ink); font-weight: 700; margin-right: 6px;}
+
+  /* big stat */
+  .big-stats {
+    display: flex; justify-content: space-around; align-items: center;
+    padding: 4vh 0;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    margin: 2vh 0;
+  }
+  .big-stat { text-align: center;}
+  .big-stat .num {
+    font-size: 3.6rem; font-weight: 800; color: var(--ink); line-height: 1; letter-spacing: -1.5px;
+  }
+  .big-stat .num .plus { color: var(--accent);}
+  .big-stat .lbl { color: var(--muted); margin-top: 10px; font-size: .88rem; letter-spacing: 1px;}
+
+  /* team */
+  .team-grid {
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px;
+  }
+  .dept-bars { display: flex; flex-direction: column; gap: 14px; padding-top: 1vh;}
+  .dept-bar { display: grid; grid-template-columns: 130px 1fr 40px; align-items: center; gap: 14px;}
+  .dept-bar .name { color: var(--ink); font-size: .95rem; font-weight: 600;}
+  .dept-bar .track {
+    height: 12px; background: var(--line-2); border-radius: 6px; overflow: hidden;
+  }
+  .dept-bar .fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%);
+    border-radius: 6px;
+    transition: width 1s ease-out;
+  }
+  .dept-bar .cnt { color: var(--ink); font-weight: 800; text-align: right;}
+
+  .team-list {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px 26px;
+    box-shadow: var(--shadow);
+  }
+  .team-list h4 { color: var(--accent); font-size: .9rem; letter-spacing: 2px; margin-bottom: 12px; font-weight: 700;}
+  .team-list ul { list-style: none;}
+  .team-list ul li {
+    color: var(--ink-2); font-size: .92rem; padding: 8px 0;
+    border-bottom: 1px dashed var(--line);
+    display: flex; justify-content: space-between;
+  }
+  .team-list ul li:last-child { border-bottom: none;}
+  .team-list ul li span:first-child { color: var(--ink); font-weight: 600;}
+  .team-list ul li .members { color: var(--muted); font-size: .85rem;}
+
+  /* timeline · 精装版 */
+  .timeline { position: relative; padding: 18px 0 0;}
+  .tl-phases {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+    padding: 0 10px;
+  }
+  .tl-phase {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    border-radius: 100px;
+    font-size: .76rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .tl-phase::before {
+    content: "";
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+  .tl-phase.prep { background: var(--accent-bg); color: var(--accent);}
+  .tl-phase.prep::before { background: var(--accent);}
+  .tl-phase.onsite { background: var(--gold-bg); color: var(--gold);}
+  .tl-phase.onsite::before { background: var(--gold);}
+
+  .timeline-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    position: relative;
+    padding: 60px 0 20px;
+  }
+  .timeline-row::before {
+    content: "";
+    position: absolute;
+    top: 96px;
+    left: 7%;
+    right: 7%;
+    height: 2px;
+    background:
+      linear-gradient(90deg,
+        rgba(200,16,46,0.2) 0%,
+        var(--accent) 8%,
+        var(--accent) 65%,
+        var(--gold) 72%,
+        var(--gold) 92%,
+        rgba(184,137,54,0.2) 100%);
+    z-index: 0;
+  }
+
+  .tl-item {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    padding: 0 6px;
+  }
+  .tl-item .tl-num {
+    font-family: "SF Mono", Consolas, monospace;
+    color: var(--dim);
+    font-size: .72rem;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .tl-item.onsite .tl-num { color: var(--gold);}
+  .tl-item.done .tl-num { color: var(--accent);}
+  .tl-item.onsite.done .tl-num { color: var(--gold);}
+
+  .tl-item .dot {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2.5px solid var(--accent);
+    margin: 0 auto 18px;
+    position: relative;
+    z-index: 2;
+    transition: transform .25s, box-shadow .25s;
+  }
+  .tl-item.onsite .dot { border-color: var(--gold);}
+  .tl-item.done .dot {
+    background: var(--accent);
+    box-shadow: 0 0 0 6px rgba(200,16,46,.10);
+  }
+  .tl-item.onsite.done .dot {
+    background: var(--gold);
+    box-shadow: 0 0 0 6px rgba(184,137,54,.10);
+  }
+  .tl-item:hover .dot {
+    transform: scale(1.2);
+  }
+
+  .tl-item .date {
+    color: var(--accent);
+    font-size: .82rem;
+    font-weight: 700;
+    letter-spacing: .5px;
+    font-family: "SF Mono", Consolas, monospace;
+  }
+  .tl-item.onsite .date { color: var(--gold);}
+  .tl-item .title {
+    color: var(--ink);
+    font-size: .95rem;
+    margin-top: 6px;
+    font-weight: 700;
+    letter-spacing: .3px;
+  }
+  .tl-item .desc {
+    color: var(--muted);
+    font-size: .8rem;
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* booth */
+  .booth-layout { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center;}
+  .booth-svg-wrap { background: var(--paper); border-radius: 12px; padding: 2.5vh 2vw; border: 1px solid var(--line); box-shadow: var(--shadow);}
+  .zones-list { display: flex; flex-direction: column; gap: 12px;}
+  .zone-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 10px;
+    padding: 14px 18px;
+    box-shadow: var(--shadow);
+  }
+  .zone-card .z-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px;}
+  .zone-card .z-tag {
+    font-size: .68rem; background: var(--accent); color: white;
+    padding: 2px 8px; border-radius: 4px; letter-spacing: 1px; font-weight: 700;
+  }
+  .zone-card .z-title { font-size: 1rem; color: var(--ink); font-weight: 700;}
+  .zone-card .z-desc { color: var(--muted); font-size: .85rem; line-height: 1.55;}
+
+  /* photos */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 180px;
+    gap: 14px;
+  }
+  .photo {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+  .photo.wide { grid-column: span 2; grid-row: span 2;}
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s;}
+  .photo:hover img { transform: scale(1.04);}
+  .photo .cap {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(26,31,54,.78));
+    color: white; padding: 14px 12px 10px 14px;
+    font-size: .82rem;
+    letter-spacing: .5px;
+  }
+
+  /* cost */
+  .cost-section { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px;}
+  table.cost { width: 100%; border-collapse: collapse; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow);}
+  table.cost th, table.cost td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--line-2);}
+  table.cost thead th { background: var(--paper-2); color: var(--dim); font-size: .8rem; letter-spacing: 2px; font-weight: 600; text-transform: uppercase;}
+  table.cost td { color: var(--ink-2); font-size: .92rem;}
+  table.cost td.amt { text-align: right; font-family: "SF Mono", Consolas, monospace; color: var(--ink); font-weight: 700;}
+  table.cost td.amt.pending { color: var(--gold); font-weight: 600;}
+  table.cost tr.total td { background: var(--accent-bg); color: var(--accent); font-weight: 800; border: none;}
+  table.cost tr.total td.amt { font-size: 1.05rem;}
+
+  /* achievements */
+  .ach-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;}
+  .ach-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 22px 22px;
+    box-shadow: var(--shadow);
+    position: relative;
+    transition: all .25s;
+  }
+  .ach-card:hover { box-shadow: var(--shadow-2); transform: translateY(-2px);}
+  .ach-card .icon {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--accent); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: .95rem;
+    margin-bottom: 12px;
+  }
+  .ach-card h4 { color: var(--ink); font-size: 1.02rem; font-weight: 700; line-height: 1.4; margin-bottom: 8px;}
+  .ach-card p { color: var(--muted); font-size: .88rem; line-height: 1.6;}
+  .ach-card p strong { color: var(--ink); font-weight: 700;}
+
+  /* gaps & actions */
+  .issue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px;}
+  .issue-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 28px 28px;
+    box-shadow: var(--shadow);
+  }
+  .issue-card.left { border-top: 3px solid var(--gold);}
+  .issue-card.right { border-top: 3px solid var(--accent);}
+  .issue-card h3 {
+    color: var(--ink); font-size: 1.15rem; font-weight: 800;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1.6vh;
+  }
+  .issue-card .tag {
+    font-size: .68rem; padding: 3px 10px; border-radius: 100px;
+    background: var(--accent-bg); color: var(--accent);
+    letter-spacing: 1px; font-weight: 700;
+  }
+  .issue-card.left .tag { background: var(--gold-bg); color: var(--gold);}
+  .issue-card ol { list-style: none; counter-reset: ic;}
+  .issue-card ol li {
+    counter-increment: ic;
+    padding: 12px 0 12px 36px;
+    position: relative;
+    border-bottom: 1px dashed var(--line);
+    color: var(--ink-2);
+    font-size: .94rem;
+    line-height: 1.55;
+  }
+  .issue-card ol li::before {
+    content: counter(ic);
+    position: absolute; left: 0; top: 11px;
+    width: 24px; height: 24px;
+    background: var(--accent-bg); color: var(--accent);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .8rem; font-weight: 800;
+  }
+  .issue-card.left ol li::before { background: var(--gold-bg); color: var(--gold);}
+  .issue-card ol li strong { color: var(--ink); display: block; margin-bottom: 4px; font-weight: 700;}
+  .issue-card ol li em { color: var(--muted); font-style: normal; font-size: .85rem;}
+
+  /* highlight callout */
+  .callout {
+    margin-top: 2vh;
+    padding: 16px 20px;
+    background: var(--accent-bg);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    color: var(--ink-2);
+    font-size: .92rem;
+    line-height: 1.6;
+  }
+  .callout strong { color: var(--accent);}
+
+  /* conclusion */
+  .conclusion {
+    background:
+      radial-gradient(1200px 600px at 80% 0%, rgba(200,16,46,.08), transparent 60%),
+      radial-gradient(900px 500px at 0% 100%, rgba(184,137,54,.08), transparent 60%),
+      var(--paper);
+    padding: 90px 56px 90px;
+  }
+  .conclusion .lead { color: var(--accent); letter-spacing: 6px; font-size: .85rem; font-weight: 700; margin-bottom: 28px;}
+  .conclusion h1 {
+    font-size: 3.2rem; font-weight: 800; line-height: 1.15; letter-spacing: -1px; color: var(--ink);
+  }
+  .conclusion h1 .accent { color: var(--accent);}
+  .conclusion .punch { color: var(--muted); font-size: 1.2rem; line-height: 1.75; margin-top: 28px; max-width: 880px;}
+  .conclusion .punch strong { color: var(--gold);}
+  .conclusion .signoff {
+    margin-top: 50px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    color: var(--dim);
+    letter-spacing: 4px;
+    font-size: .82rem;
+    width: 100%;
+  }
+
+  /* ============ BIG DATA OPENING ============ */
+  .bd-hero {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 32px;
+  }
+  .bd-hero-card {
+    background: linear-gradient(135deg, var(--paper) 0%, var(--paper-2) 100%);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 24px 22px 20px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  .bd-hero-card::after {
+    content: "";
+    position: absolute;
+    right: -30px; top: -30px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,16,46,.06) 0%, transparent 70%);
+  }
+  .bd-hero-num {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--accent);
+    letter-spacing: -1.5px;
+    display: flex; align-items: baseline; gap: 2px;
+  }
+  .bd-hero-num .v { letter-spacing: -2px;}
+  .bd-hero-num .plus {
+    font-size: 1.3rem; font-weight: 700; color: var(--accent-2);
+  }
+  .bd-hero-lbl {
+    color: var(--ink); font-size: 1rem; font-weight: 700;
+    margin-top: 12px;
+  }
+  .bd-hero-sub {
+    color: var(--muted); font-size: .82rem; margin-top: 4px; line-height: 1.5;
+  }
+
+  /* source link inside data cards */
+  .src-link {
+    position: absolute;
+    right: 14px; bottom: 12px;
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 12px;
+    background: var(--accent-bg);
+    border: 1px solid #F5BCC6;
+    border-radius: 100px;
+    color: var(--accent);
+    font-size: .74rem;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: .5px;
+    transition: all .18s;
+    z-index: 2;
+  }
+  .src-link::before {
+    content: "▸"; font-size: .8rem; line-height: 1;
+  }
+  .src-link:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(200,16,46,0.25);
+  }
+  .src-link.inline {
+    position: static;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  /* 内联引用标签（如 L1 / L12） */
+  a.cite-inline {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px dashed var(--accent);
+    padding: 0 1px;
+    margin: 0 1px;
+  }
+  a.cite-inline:hover {
+    background: var(--accent-bg);
+  }
+  .bd-hero-card, .bd-block, .bd-theme {
+    padding-bottom: 44px;
+  }
+  .src-list {
+    margin-top: 18px;
+    padding: 16px 18px;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    font-size: .82rem;
+  }
+  .src-list h5 {
+    font-size: .72rem;
+    color: var(--dim);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .src-list ol {
+    list-style: none; padding: 0; counter-reset: src-c;
+  }
+  .src-list ol li {
+    counter-increment: src-c;
+    padding: 5px 0 5px 28px;
+    position: relative;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+  .src-list ol li::before {
+    content: "[" counter(src-c) "]";
+    position: absolute; left: 0; top: 5px;
+    color: var(--accent);
+    font-weight: 700;
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: .78rem;
+  }
+  .src-list a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--accent);
+    padding-bottom: 1px;
+    word-break: break-all;
+  }
+  .src-list a:hover { background: var(--accent-bg);}
+  .src-list .meta { color: var(--dim); font-size: .78rem; margin-top: 2px; display: block;}
+
+  .bd-grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 8px;
+  }
+  .bd-block {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 26px 28px;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  /* 在 .bd-grid2 双卡布局中，让 .bd-note 贴底，方便两侧 callout / 查看明细 按钮对齐 */
+  .bd-grid2 .bd-block {
+    display: flex;
+    flex-direction: column;
+  }
+  .bd-grid2 .bd-block .bd-note {
+    margin-top: auto;
+  }
+  .bd-h3 {
+    display: flex; align-items: center; gap: 10px;
+    color: var(--ink); font-size: 1.05rem; font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .bd-h3 .bar {
+    width: 4px; height: 16px; background: var(--accent); border-radius: 2px;
+  }
+  .bd-section-h {
+    margin-top: 32px;
+    margin-bottom: 16px;
+    color: var(--ink);
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .bd-section-h::before {
+    content: ""; width: 4px; height: 18px; background: var(--accent); border-radius: 2px;
+  }
+
+  .bd-bars { display: flex; flex-direction: column; gap: 14px;}
+  .bd-row {
+    display: grid;
+    grid-template-columns: 90px 1fr 56px;
+    align-items: center;
+    gap: 14px;
+  }
+  .bd-row .rgn { color: var(--ink); font-size: .95rem; font-weight: 600;}
+  .bd-row .rg-track {
+    height: 14px; background: var(--line-2); border-radius: 7px; overflow: hidden;
+  }
+  .bd-row .rg-fill {
+    height: 100%; border-radius: 7px;
+    transition: width 1.1s ease-out;
+  }
+  .bd-row .pct { color: var(--ink); font-weight: 800; text-align: right; font-family: "SF Mono", Consolas, monospace; font-size: .9rem;}
+
+  /* ---- 地区分布卡：高密度版 ---- */
+  .rg-summary {
+    display: flex; align-items: baseline; gap: 10px;
+    margin-bottom: 14px;
+    color: var(--muted);
+    font-size: .82rem;
+    letter-spacing: 1px;
+  }
+  .rg-summary strong {
+    color: var(--ink); font-weight: 700;
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: 1rem; letter-spacing: 0;
+  }
+  .rg-summary .sep {
+    width: 4px; height: 4px; background: var(--dim); border-radius: 50%;
+  }
+  .rg-stack {
+    display: flex;
+    height: 30px;
+    border-radius: 100px;
+    overflow: hidden;
+    background: var(--line-2);
+    box-shadow: 0 1px 2px rgba(20,30,60,.04);
+    margin-bottom: 8px;
+  }
+  .rg-stack .seg {
+    height: 100%;
+    transition: width 1.1s ease-out;
+  }
+  .rg-stack .seg.eu { background: linear-gradient(90deg, #C8102E, #E13950); }
+  .rg-stack .seg.na { background: linear-gradient(90deg, #1F4FA8, #3A6FD0); }
+  .rg-stack .seg.ap { background: linear-gradient(90deg, #B88936, #D5A754); }
+  .rg-stack .seg.ot { background: linear-gradient(90deg, #6E7A92, #97A1B5); }
+  .rg-stack-axis {
+    display: flex; justify-content: space-between;
+    color: var(--dim);
+    font-size: .68rem;
+    font-family: "SF Mono", Consolas, monospace;
+    letter-spacing: 1px;
+    margin-bottom: 22px;
+  }
+  .rg-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+  .rg-chip {
+    padding: 14px 16px;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    transition: border-color .18s, transform .18s;
+  }
+  .rg-chip:hover {
+    border-color: var(--line);
+    transform: translateY(-1px);
+  }
+  .rg-chip .rh {
+    display: flex; align-items: center; gap: 9px;
+    margin-bottom: 6px;
+  }
+  .rg-chip .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .rg-chip.eu .dot { background: linear-gradient(135deg, #C8102E, #E13950);}
+  .rg-chip.na .dot { background: linear-gradient(135deg, #1F4FA8, #3A6FD0);}
+  .rg-chip.ap .dot { background: linear-gradient(135deg, #B88936, #D5A754);}
+  .rg-chip.ot .dot { background: linear-gradient(135deg, #6E7A92, #97A1B5);}
+  .rg-chip .name {
+    color: var(--ink);
+    font-weight: 700;
+    font-size: .95rem;
+    letter-spacing: .3px;
+  }
+  .rg-chip .pct {
+    margin-left: auto;
+    font-family: "SF Mono", Consolas, monospace;
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: -.5px;
+  }
+  .rg-chip.eu .pct { color: var(--accent);}
+  .rg-chip.na .pct { color: var(--blue);}
+  .rg-chip.ap .pct { color: var(--gold);}
+  .rg-chip.ot .pct { color: var(--muted);}
+  .rg-chip .sub {
+    color: var(--muted);
+    font-size: .76rem;
+    letter-spacing: 1px;
+    font-family: "SF Mono", Consolas, monospace;
+    padding-left: 19px;
+  }
+
+  .bd-rank { list-style: none;}
+  .bd-rank li {
+    display: grid; grid-template-columns: 32px 1fr 34px 32px 36px;
+    align-items: center; gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .bd-rank li .flag {
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .bd-rank li .flag img {
+    width: 30px; height: 22px; object-fit: cover;
+    border-radius: 3px;
+    box-shadow: 0 0 0 1px rgba(20,30,60,0.08), 0 1px 2px rgba(20,30,60,0.06);
+    display: block;
+  }
+  .bd-rank li:last-child { border-bottom: none;}
+  .bd-rank li .r {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--paper-2); border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; color: var(--muted); font-size: .85rem;
+  }
+  .bd-rank li .r.highlight { background: var(--accent); color: #fff; border-color: var(--accent);}
+  .bd-rank li .c strong { color: var(--ink); font-weight: 700; display: block;}
+  .bd-rank li .c em { color: var(--muted); font-style: normal; font-size: .82rem;}
+  .bd-rank li .f {
+    font-size: .82rem; text-align: right;
+    color: var(--dim); font-family: "SF Mono", Consolas, monospace; letter-spacing: 1px;
+  }
+  .bd-rank li .go {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: all .15s;
+  }
+  .bd-rank li .go:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    transform: translateX(2px);
+    box-shadow: 0 3px 8px rgba(200,16,46,.22);
+  }
+  .bd-rank li .go.highlight {
+    background: var(--accent-bg);
+    border-color: #F5BCC6;
+    color: var(--accent);
+  }
+
+  .bd-note {
+    margin-top: 18px;
+    padding: 12px 16px;
+    background: var(--paper-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    color: var(--ink-2);
+    font-size: .88rem;
+    line-height: 1.65;
+  }
+  .bd-note strong { color: var(--accent);}
+
+  .bd-themes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .bd-theme {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 24px 24px 48px;
+    box-shadow: var(--shadow);
+    position: relative;
+    display: flex; flex-direction: column;
+  }
+  .bd-theme .t-icon {
+    width: 56px; height: 32px;
+    background: var(--accent); color: #fff;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: .8rem; letter-spacing: 1px;
+    margin-bottom: 14px;
+  }
+  .bd-theme h4 {
+    color: var(--ink); font-size: 1.02rem; font-weight: 700;
+    line-height: 1.4; margin-bottom: 10px;
+  }
+  .bd-theme p {
+    color: var(--ink-2); font-size: .9rem; line-height: 1.65;
+    flex: 1;
+  }
+  .bd-theme p strong { color: var(--accent); font-weight: 700;}
+  .bd-theme .t-tag {
+    align-self: flex-start;
+    margin-top: 14px;
+    padding: 4px 10px;
+    background: var(--accent-bg);
+    color: var(--accent);
+    border-radius: 100px;
+    font-size: .72rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+
+  .bd-brands {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 4px;
+  }
+  .bd-brands span {
+    padding: 7px 14px;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    color: var(--ink-2);
+    font-size: .85rem;
+    font-weight: 500;
+    transition: all .15s;
+  }
+  .bd-brands span:hover { border-color: var(--accent); color: var(--accent);}
+  .bd-brands span.cn {
+    background: var(--accent-bg);
+    border-color: #F5BCC6;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .bd-impact {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  .imp-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 22px 24px;
+    box-shadow: var(--shadow);
+  }
+  .imp-card .imp-head {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .imp-card .imp-head strong { color: var(--ink); font-size: 1.02rem; font-weight: 700;}
+  .imp-card .imp-tag {
+    padding: 3px 10px;
+    background: var(--accent-bg);
+    color: var(--accent);
+    border-radius: 4px;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .imp-card p {
+    color: var(--ink-2);
+    font-size: .9rem;
+    line-height: 1.7;
+    margin-bottom: 8px;
+  }
+  .imp-card p:last-child { margin-bottom: 0;}
+  .imp-card p strong { color: var(--ink); font-weight: 700;}
+
+  /* ============ 战略框架 ============ */
+  .frame-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 8px;
+  }
+  .q-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 24px 22px 20px;
+    box-shadow: var(--shadow);
+    position: relative;
+    border-top: 3px solid var(--accent);
+  }
+  .q-card .q-num {
+    color: var(--accent);
+    font-size: .72rem;
+    letter-spacing: 3px;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+  .q-card h4 {
+    font-size: 1.05rem;
+    color: var(--ink);
+    line-height: 1.4;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .q-card p {
+    color: var(--muted);
+    font-size: .85rem;
+    line-height: 1.65;
+  }
+  .q-card p strong { color: var(--ink); font-weight: 600;}
+
+  /* ============ TRENDS ============ */
+  .trend-block {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 24px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px 30px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .trend-block .t-num {
+    color: var(--accent);
+    font-size: 2.6rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -1px;
+    font-family: "SF Mono", Consolas, monospace;
+  }
+  .trend-block .t-num::after {
+    content: "";
+    display: block;
+    width: 28px; height: 3px;
+    background: var(--accent);
+    margin-top: 14px;
+  }
+  .trend-block h3 {
+    color: var(--ink);
+    font-size: 1.45rem;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 6px;
+    letter-spacing: -.3px;
+  }
+  .trend-block h3 .sub-h {
+    color: var(--accent);
+    font-size: 1rem;
+    font-weight: 600;
+    display: block;
+    margin-top: 4px;
+    letter-spacing: 0;
+  }
+  .trend-block .t-body { color: var(--ink-2); font-size: .98rem; line-height: 1.75;}
+  .trend-block .t-body p { margin-bottom: 14px;}
+  .trend-block .t-body strong { color: var(--ink); font-weight: 700;}
+  .trend-evidence {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 16px;
+  }
+  .ev-box {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .ev-box.evidence { border-left: 3px solid var(--blue);}
+  .ev-box.implication { border-left: 3px solid var(--accent);}
+  .ev-box .ev-tag {
+    color: var(--blue);
+    font-size: .68rem;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .ev-box.implication .ev-tag { color: var(--accent);}
+  .ev-box.opportunity { border-left: 3px solid #C8A04A; margin-top: 14px; background: linear-gradient(180deg, rgba(200,160,74,0.06), var(--paper-2));}
+  .ev-box.opportunity .ev-tag { color: #B8861F;}
+  .ev-box p { font-size: .9rem; line-height: 1.65; color: var(--ink-2); margin-bottom: 0;}
+
+  /* ============ COMPETITIVE MATRIX ============ */
+  .matrix-wrap {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 32px;
+    align-items: center;
+  }
+  .matrix-svg-wrap {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .matrix-svg { width: 100%; height: auto; display: block;}
+  .matrix-side h3 {
+    color: var(--ink);
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .matrix-side h3 .bar { width: 4px; height: 18px; background: var(--accent); border-radius: 2px;}
+  .matrix-side ul { list-style: none;}
+  .matrix-side ul li {
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--line);
+    color: var(--ink-2);
+    font-size: .94rem;
+    line-height: 1.55;
+  }
+  .matrix-side ul li strong { color: var(--accent); font-weight: 700; display: block;}
+  .matrix-side ul li em { font-style: normal; color: var(--muted); font-size: .85rem;}
+
+  /* ============ 战略命题 ============ */
+  .qpanel {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 30px 32px;
+    box-shadow: var(--shadow);
+    margin-bottom: 22px;
+    position: relative;
+    border-left: 4px solid var(--accent);
+  }
+  .qpanel .qnum {
+    color: var(--accent);
+    font-size: .78rem;
+    letter-spacing: 3px;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+  .qpanel h3 {
+    color: var(--ink);
+    font-size: 1.55rem;
+    font-weight: 800;
+    line-height: 1.35;
+    margin-bottom: 18px;
+    letter-spacing: -.3px;
+  }
+  .qpanel h3 .accent-q { color: var(--accent);}
+  .qpanel .choice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 14px 0 16px;
+  }
+  .qpanel .choice {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 18px;
+  }
+  .qpanel .choice .ch-label {
+    color: var(--ink);
+    font-weight: 700;
+    font-size: .95rem;
+    margin-bottom: 6px;
+  }
+  .qpanel .choice .ch-desc { color: var(--muted); font-size: .85rem; line-height: 1.6;}
+  .qpanel .impact {
+    margin-top: 14px;
+    padding: 14px 18px;
+    background: var(--accent-bg);
+    border-radius: 8px;
+    color: var(--ink-2);
+    font-size: .92rem;
+    line-height: 1.7;
+  }
+  .qpanel .impact strong { color: var(--accent);}
+
+  /* ============ 90 DAY ACTIONS ============ */
+  .actions-list {
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .action-row {
+    display: grid;
+    grid-template-columns: 78px 1fr 180px 130px;
+    gap: 18px;
+    align-items: center;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 22px;
+    box-shadow: var(--shadow);
+    transition: all .15s;
+  }
+  .action-row:hover { box-shadow: var(--shadow-2); border-color: var(--accent);}
+  .action-row .day {
+    color: var(--accent);
+    font-weight: 800;
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: .95rem;
+    letter-spacing: 1px;
+  }
+  .action-row .what strong { color: var(--ink); font-size: 1rem; font-weight: 700; display: block; margin-bottom: 4px;}
+  .action-row .what em { color: var(--muted); font-style: normal; font-size: .85rem; line-height: 1.5; display: block;}
+  .action-row .who {
+    color: var(--ink-2);
+    font-size: .85rem;
+    padding: 6px 12px;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    text-align: center;
+  }
+  .action-row .kpi {
+    color: var(--green);
+    font-size: .82rem;
+    font-weight: 600;
+    text-align: right;
+    line-height: 1.5;
+  }
+
+  /* ============ STICKY TOP NAV ============ */
+  .topnav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 56px;
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    z-index: 100;
+    display: flex; align-items: center;
+    padding: 0 32px;
+  }
+  .topnav .logo {
+    font-size: .8rem; letter-spacing: 4px; color: var(--ink); font-weight: 600;
+    margin-right: 28px; white-space: nowrap;
+  }
+  .topnav .logo strong { color: var(--accent); margin-right: 6px; font-weight: 800;}
+  .topnav .links {
+    display: flex; gap: 4px; flex: 1; overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .topnav .links::-webkit-scrollbar { display: none;}
+  .topnav .links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: .82rem;
+    padding: 6px 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: all .15s;
+  }
+  .topnav .links a:hover { color: var(--accent); background: var(--accent-bg);}
+  .topnav .meta {
+    font-size: .72rem; color: var(--dim); letter-spacing: 2px;
+    margin-left: 14px; white-space: nowrap;
+  }
+
+  .progress-bar {
+    position: fixed;
+    top: 56px; left: 0;
+    height: 2px;
+    background: var(--accent);
+    width: 0%;
+    z-index: 101;
+    transition: width .1s linear;
+  }
+
+  @media (max-width: 900px) {
+    .slide, .cover, .conclusion { padding: 44px 24px 56px;}
+    .cover-title { font-size: 2.4rem;}
+    .conclusion h1 { font-size: 2rem;}
+    .slide-title { font-size: 1.5rem;}
+    .twocol, .kpi-grid, .issue-grid, .ach-grid, .booth-layout, .team-grid, .cost-section, .notice-grid, .prep-grid, .cover-meta, .bd-hero, .bd-grid2, .bd-themes, .bd-impact, .frame-grid, .matrix-wrap, .trend-evidence, .qpanel .choice-grid { grid-template-columns: 1fr;}
+    .trend-block { grid-template-columns: 1fr;}
+    .trend-block .t-num { font-size: 2rem;}
+    .action-row { grid-template-columns: 1fr; gap: 8px;}
+    .action-row .who, .action-row .kpi { text-align: left;}
+    .timeline-row { grid-template-columns: repeat(2, 1fr); gap: 18px;}
+    .timeline::before { display: none;}
+    .tl-item .dot { margin: 8px auto;}
+    .photo-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 140px;}
+    .topnav .links { display: none;}
+    .topnav .meta { margin-left: auto;}
+  }
+
+  /* ================= PART 2 · 编辑风 · Kangxin 红 =================== */
+  /* P2 标题区 */
+  .p2-hero {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 36px;
+    align-items: start;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 48px;
+  }
+  .p2-hero.single { grid-template-columns: 1fr;}
+  .p2-act {
+    color: var(--dim);
+    letter-spacing: 6px;
+    font-size: .68rem;
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+  .p2-act-num {
+    font-family: "Times New Roman", "Source Han Serif SC", Georgia, serif;
+    font-weight: 300;
+    color: var(--ink);
+    font-size: 4.6rem;
+    line-height: 1;
+    letter-spacing: -3px;
+  }
+  .p2-act-num em {
+    font-style: italic;
+    color: var(--accent);
+    margin-left: 4px;
+  }
+  .p2-eyebrow {
+    color: var(--dim);
+    letter-spacing: 6px;
+    font-size: .72rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .p2-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--ink);
+    letter-spacing: -.5px;
+    margin-bottom: 18px;
+  }
+  .p2-title .em-ink { color: var(--ink);}
+  .p2-title .sep { color: var(--dim); margin: 0 14px; font-weight: 400;}
+  .p2-sub {
+    color: var(--muted);
+    font-size: 1.02rem;
+    line-height: 1.7;
+    max-width: 920px;
+  }
+  .p2-sub strong { color: var(--ink); font-weight: 700;}
+
+  /* ============ 统一 PART 大标识 · 三大部分起始锚点 ============ */
+  .part-banner {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 28px;
+    padding: 30px 36px;
+    margin: 0 0 56px;
+    background: linear-gradient(135deg, var(--paper) 0%, var(--paper-2) 100%);
+    border: 1px solid var(--line);
+    border-left: 6px solid var(--accent);
+    border-radius: 4px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  .part-banner::before {
+    content: "";
+    position: absolute;
+    top: -40px; right: -60px;
+    width: 280px; height: 200px;
+    background: radial-gradient(circle at center, rgba(200,16,46,0.10), transparent 60%);
+    pointer-events: none;
+  }
+  .part-banner::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, var(--accent) 0%, transparent 35%);
+    pointer-events: none;
+  }
+  .part-banner .pb-num {
+    font-family: "Times New Roman", "Source Han Serif SC", Georgia, serif;
+    font-weight: 300;
+    font-size: 5.2rem;
+    line-height: .9;
+    color: var(--accent);
+    letter-spacing: -3px;
+    position: relative;
+    z-index: 1;
+  }
+  .part-banner .pb-num em {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .part-banner .pb-mid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-left: 1px solid var(--line);
+    padding-left: 28px;
+    align-self: stretch;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+  .part-banner .pb-label {
+    color: var(--accent);
+    letter-spacing: 5px;
+    font-size: .76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .part-banner .pb-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -.5px;
+    line-height: 1.18;
+  }
+  .part-banner .pb-title .accent { color: var(--accent);}
+  .part-banner .pb-title .sep { color: var(--dim); margin: 0 10px; font-weight: 400;}
+  .part-banner .pb-sub {
+    color: var(--muted);
+    font-size: .98rem;
+    font-weight: 400;
+    margin-top: 6px;
+    line-height: 1.55;
+  }
+  .part-banner .pb-sub strong { color: var(--ink); font-weight: 700;}
+  .part-banner .pb-tag {
+    align-self: center;
+    color: var(--dim);
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: .7rem;
+    letter-spacing: 3px;
+    padding: 6px 14px;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    background: var(--paper);
+    white-space: nowrap;
+    position: relative;
+    z-index: 1;
+  }
+  @media (max-width: 900px) {
+    .part-banner {
+      grid-template-columns: auto 1fr;
+      gap: 18px;
+      padding: 22px 22px;
+    }
+    .part-banner .pb-tag { display: none;}
+    .part-banner .pb-mid {
+      padding-left: 18px;
+    }
+    .part-banner .pb-num { font-size: 3.8rem;}
+    .part-banner .pb-title { font-size: 1.45rem;}
+  }
+
+  /* P2 子节标号 (2.1 / 2.2 / 2.3) */
+  .p2-sec-label {
+    display: flex; align-items: center; gap: 14px;
+    color: var(--accent);
+    font-family: "SF Mono", Consolas, monospace;
+    letter-spacing: 4px;
+    font-size: .82rem;
+    font-weight: 700;
+    margin-bottom: 32px;
+  }
+  .p2-sec-label::after {
+    content: ""; flex: 0 0 28px; height: 1px; background: var(--accent);
+    display: inline-block;
+  }
+  .p2-sec-label .label-text {
+    color: var(--ink-2);
+    letter-spacing: 4px;
+  }
+  .p2-sec-label .num { color: var(--accent); font-weight: 700;}
+
+  /* P2 巨型 lead 句 */
+  .p2-lead {
+    font-size: 3.2rem;
+    font-weight: 800;
+    line-height: 1.18;
+    letter-spacing: -1px;
+    color: var(--ink);
+    margin-bottom: 38px;
+    max-width: 1100px;
+  }
+  .p2-lead .blue { color: var(--accent); }
+  .p2-lead .italic-blue {
+    color: var(--accent);
+    font-family: "Times New Roman", "Source Han Serif SC", Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  /* 5 大核心指标 */
+  .p2-metric-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+  .p2-metric {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 22px 22px 24px;
+    box-shadow: var(--shadow);
+    display: flex; flex-direction: column;
+    min-height: 240px;
+  }
+  .p2-metric .m-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-bottom: 14px; margin-bottom: 14px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .p2-metric .m-name {
+    color: var(--ink); font-size: .92rem; font-weight: 600; letter-spacing: 1.5px;
+  }
+  .p2-metric .m-code {
+    color: var(--accent); font-family: "SF Mono", Consolas, monospace;
+    font-size: .72rem; letter-spacing: 1.5px; font-weight: 600;
+  }
+  .p2-metric .m-val {
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--ink);
+    letter-spacing: -2px;
+    line-height: 1;
+    margin: 4px 0 14px;
+    font-family: "Helvetica Neue", "Inter", -apple-system, sans-serif;
+  }
+  .p2-metric .m-val .u {
+    font-size: 1.1rem; color: var(--accent); margin-left: 4px; letter-spacing: 0;
+    font-weight: 600;
+  }
+  .p2-metric .m-tag {
+    display: inline-block;
+    background: var(--green-bg);
+    color: var(--green);
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: .76rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    align-self: flex-start;
+    letter-spacing: .5px;
+  }
+  .p2-metric .m-caption {
+    color: var(--ink-2); font-size: .82rem; font-weight: 600;
+    margin-top: -6px; margin-bottom: 12px;
+    letter-spacing: .3px;
+  }
+  .p2-metric .m-note {
+    color: var(--muted);
+    font-size: .8rem;
+    line-height: 1.6;
+    margin-top: auto;
+  }
+  .p2-metric .m-note .line { display: block; }
+  .p2-metric .m-note .line + .line { margin-top: 4px; }
+  .p2-metric .m-note .label {
+    color: var(--accent); font-weight: 700; font-size: .68rem;
+    letter-spacing: 1.5px; margin-right: 4px;
+    font-family: "SF Mono", Consolas, monospace;
+  }
+
+  /* 2.1 上方逻辑链 */
+  .p2-logic-chain {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px; margin: 16px 0 28px;
+    flex-wrap: wrap;
+  }
+  .p2-logic-chain .step {
+    padding: 10px 22px; border: 1.5px solid var(--line); border-radius: 999px;
+    background: var(--paper); color: var(--ink);
+    font-size: 1rem; font-weight: 700; letter-spacing: 1.5px;
+    box-shadow: var(--shadow);
+  }
+  .p2-logic-chain .arrow {
+    color: var(--accent); font-weight: 800; font-size: 1.4rem;
+  }
+
+  /* 2.2 客户结构 · 大数 */
+  .p2-bigstat {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    color: var(--ink);
+    margin-bottom: 18px;
+    max-width: 1100px;
+  }
+  .p2-bigstat .blue { color: var(--accent);}
+  .p2-bigstat-desc {
+    color: var(--muted);
+    font-size: 1.02rem;
+    line-height: 1.7;
+    max-width: 760px;
+    margin-bottom: 40px;
+  }
+  .p2-bigstat-desc strong { color: var(--ink); font-weight: 700;}
+
+  /* 2.2 双栏：柱状图 + 品牌列表 */
+  .p2-struct-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+    margin-bottom: 56px;
+  }
+  .p2-region-chart .axis-label {
+    display: flex; justify-content: space-between;
+    color: var(--dim);
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: .72rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 18px;
+  }
+  .p2-region-chart .axis-label .right { color: var(--dim);}
+  .p2-region-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 110px;
+    align-items: center;
+    gap: 14px;
+    padding: 11px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .p2-region-row:first-of-type { color: var(--accent); font-weight: 700;}
+  .p2-region-row .reg {
+    color: var(--ink-2); font-size: .95rem; font-weight: 600; letter-spacing: 1px;
+  }
+  .p2-region-row.eu .reg { color: var(--accent);}
+  .p2-region-row .track {
+    height: 18px; background: var(--line-2); border-radius: 3px; overflow: hidden;
+  }
+  .p2-region-row .fill {
+    height: 100%; border-radius: 3px;
+    transition: width 1.1s ease-out;
+  }
+  .p2-region-row.eu .fill {
+    background: repeating-linear-gradient(45deg, #C8102E 0 6px, #E13950 6px 12px);
+  }
+  .p2-region-row.ap .fill { background: linear-gradient(90deg, #4A9AAB, #6FB3C4);}
+  .p2-region-row.na .fill { background: linear-gradient(90deg, #97A1B5, #B6BFD0);}
+  .p2-region-row.la .fill { background: linear-gradient(90deg, #97A1B5, #B6BFD0);}
+  .p2-region-row.me .fill { background: linear-gradient(90deg, #97A1B5, #B6BFD0);}
+  .p2-region-row .val {
+    text-align: right; color: var(--ink-2); font-family: "SF Mono", Consolas, monospace;
+    font-size: .92rem; font-weight: 700;
+  }
+  .p2-region-row .val .pct { color: var(--dim); margin-left: 6px; font-weight: 500;}
+  .p2-region-row.eu .val { color: var(--accent);}
+
+  .p2-brand-box {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 22px 24px;
+    position: relative;
+  }
+  .p2-brand-box::before {
+    content: ""; position: absolute; top: 0; right: 0;
+    width: 28px; height: 28px;
+    background: linear-gradient(135deg, transparent 50%, var(--accent) 50%);
+    border-top-right-radius: 10px;
+  }
+  .p2-brand-head {
+    color: var(--accent); font-family: "SF Mono", Consolas, monospace;
+    font-size: .82rem; font-weight: 700; letter-spacing: 1.5px;
+    margin-bottom: 14px;
+  }
+  .p2-brand-list {
+    color: var(--ink-2);
+    font-size: .92rem;
+    line-height: 1.85;
+    letter-spacing: .3px;
+  }
+  .p2-brand-list .pa { color: var(--muted); font-size: .85rem;}
+  .p2-brand-warn {
+    color: var(--accent);
+    font-size: .88rem;
+    line-height: 1.6;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px dashed rgba(200,16,46,.3);
+  }
+  .p2-brand-warn strong { color: var(--accent); font-weight: 700;}
+
+  /* 2.2 三个最值得讲的接触结构 */
+  .p2-stk-title {
+    font-size: 1.2rem; font-weight: 700;
+    color: var(--ink); margin-bottom: 24px;
+    letter-spacing: .5px;
+  }
+  .p2-stack-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 200px;
+    align-items: center;
+    gap: 28px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .p2-stack-row:first-of-type { border-top: 1px solid var(--line);}
+  .p2-stack-row .stk-num {
+    font-family: "Helvetica Neue", "Inter", sans-serif;
+    font-weight: 300;
+    color: var(--accent);
+    font-size: 2rem;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+  .p2-stack-row .stk-body .stk-h {
+    color: var(--ink); font-size: 1.1rem; font-weight: 700;
+    margin-bottom: 6px; letter-spacing: .3px;
+  }
+  .p2-stack-row .stk-body .stk-desc {
+    color: var(--muted); font-size: .92rem; line-height: 1.6;
+  }
+  .p2-stack-row .stk-side {
+    border-left: 2px solid var(--accent);
+    padding-left: 16px;
+    color: var(--accent);
+    font-size: .85rem;
+    line-height: 1.5;
+    letter-spacing: .3px;
+  }
+
+  /* 2.2 readout 深色卡片 */
+  .p2-readout {
+    margin-top: 40px;
+    padding: 32px 36px;
+    background: linear-gradient(135deg, #0E1B2F 0%, #1A2D4A 100%);
+    border-radius: 12px;
+    color: #ECF0F6;
+    position: relative;
+    overflow: hidden;
+  }
+  .p2-readout::after {
+    content: ""; position: absolute; top: 0; right: 0;
+    width: 60px; height: 60px;
+    background: linear-gradient(135deg, transparent 50%, var(--accent) 50%);
+  }
+  .p2-readout .ro-eyebrow {
+    color: #8A96AE; font-family: "SF Mono", Consolas, monospace;
+    font-size: .78rem; letter-spacing: 3px; margin-bottom: 16px;
+    font-weight: 600;
+  }
+  .p2-readout p {
+    color: #D9DFE8;
+    font-size: 1.02rem;
+    line-height: 1.8;
+    margin-bottom: 10px;
+  }
+  .p2-readout p:last-child { margin-bottom: 0;}
+  .p2-readout strong { color: #FFFFFF; font-weight: 700;}
+  .p2-readout .hl {
+    color: #FFFFFF;
+    background: rgba(230, 57, 80, .28);
+    padding: 2px 6px; border-radius: 3px;
+  }
+
+  /* 2.3 transition 表 */
+  .p2-trans {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .p2-trans th, .p2-trans td {
+    padding: 18px 22px;
+    text-align: left;
+    border-bottom: 1px dashed var(--line);
+    font-size: .98rem;
+  }
+  .p2-trans tr:last-child td { border-bottom: none;}
+  .p2-trans th {
+    background: var(--paper-2);
+    color: var(--ink-2);
+    font-size: .82rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+  }
+  .p2-trans th.mid { color: var(--accent);}
+  .p2-trans th.mid::before { content: "→ "; }
+  .p2-trans td.before { color: var(--muted);}
+  .p2-trans td.now { color: var(--ink); font-weight: 700;}
+  .p2-trans td.tag { color: var(--accent); font-weight: 600; letter-spacing: 1px; font-family: "SF Mono", Consolas, monospace; font-size: .85rem;}
+  .p2-trans td.tag::before { content: "→ "; color: var(--dim);}
+
+  /* 2.3 Top 12 pipeline 清单 */
+  .p2-pipeline {
+    margin-top: 40px;
+  }
+  .p2-pipeline-title {
+    font-size: 1.18rem; color: var(--ink); font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: .3px;
+  }
+  .p2-pipeline-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+  }
+  .p2-pipe {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 18px;
+    transition: border-color .18s, transform .18s;
+  }
+  .p2-pipe:hover { border-color: var(--accent); transform: translateY(-2px);}
+  .p2-pipe .pi-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 10px;
+  }
+  .p2-pipe .pi-num {
+    color: var(--accent); font-family: "SF Mono", Consolas, monospace;
+    font-size: .72rem; letter-spacing: 1.5px; font-weight: 700;
+  }
+  .p2-pipe .pi-temp {
+    font-size: .68rem; padding: 3px 8px; border-radius: 100px;
+    letter-spacing: 1px; font-weight: 700;
+  }
+  .p2-pipe .pi-temp.hot { background: var(--accent-bg); color: var(--accent);}
+  .p2-pipe .pi-temp.warm { background: var(--gold-bg); color: var(--gold);}
+  .p2-pipe .pi-temp.cold { background: var(--line-2); color: var(--dim);}
+  .p2-pipe .pi-name { color: var(--ink); font-weight: 700; font-size: 1rem; margin-bottom: 4px;}
+  .p2-pipe .pi-next { color: var(--muted); font-size: .82rem; line-height: 1.5;}
+  .p2-pipe .pi-next strong { color: var(--ink); font-weight: 600;}
+
+  /* Part 2 各 section padding tweak */
+  .p2-slide { padding: 60px 56px 80px;}
+
+  /* 2.4 / 2.5 · 资产卡片 2x2 网格 */
+  .p2-asset-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 40px;
+  }
+  .p2-asset-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px 26px;
+    box-shadow: var(--shadow);
+    transition: border-color .18s, transform .18s;
+  }
+  .p2-asset-card:hover { border-color: var(--accent); transform: translateY(-2px);}
+  .p2-asset-card .a-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-bottom: 12px; margin-bottom: 14px;
+    border-bottom: 1px dashed var(--line);
+    gap: 12px;
+  }
+  .p2-asset-card .a-tag {
+    color: var(--accent);
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: .72rem;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+  }
+  .p2-asset-card .a-num {
+    color: var(--ink);
+    font-family: "Helvetica Neue", "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: .3px;
+  }
+  .p2-asset-card .a-name {
+    color: var(--ink);
+    font-size: 1.18rem;
+    font-weight: 800;
+    letter-spacing: .3px;
+    margin-bottom: 10px;
+  }
+  .p2-asset-card .a-desc {
+    color: var(--ink-2);
+    font-size: .94rem;
+    line-height: 1.65;
+  }
+  .p2-asset-card .a-desc strong { color: var(--ink); font-weight: 700;}
+  .p2-asset-card .a-quote {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: var(--paper-2);
+    border-left: 2px solid var(--accent);
+    color: var(--muted);
+    font-size: .84rem;
+    font-style: italic;
+    line-height: 1.55;
+  }
+
+  @media (max-width: 900px) {
+    .p2-hero { grid-template-columns: 1fr; gap: 16px;}
+    .p2-act-num { font-size: 3rem;}
+    .p2-title { font-size: 1.6rem;}
+    .p2-metric-grid { grid-template-columns: repeat(2, 1fr);}
+    .p2-struct-grid { grid-template-columns: 1fr;}
+    .p2-stack-row { grid-template-columns: 40px 1fr; row-gap: 6px;}
+    .p2-stack-row .stk-side { grid-column: 1 / -1; border-left: 0; border-top: 1px dashed var(--accent); padding-left: 0; padding-top: 8px;}
+    .p2-lead, .p2-bigstat { font-size: 2rem;}
+    .p2-pipeline-grid { grid-template-columns: 1fr;}
+  }
+
+</style>
+</head>
+<body>
+
+<!-- sticky top nav -->
+<nav class="topnav">
+  <div class="logo"><strong>康信</strong>INTA 2026</div>
+  <div class="links">
+    <a href="#sec-cover">封面</a>
+    <a href="#sec-bigdata">大数据</a>
+    <a href="#sec-trends">三大拐点</a>
+    <a href="#sec-frame">四问框架</a>
+    <a href="#sec-part2">经营答卷</a>
+    <a href="#sec-part2-clients">客户资产</a>
+    <a href="#sec-part2-product">产品资产</a>
+    <a href="#sec-part2-channel">渠道资产</a>
+    <a href="#sec-timeline">筹备主线</a>
+    <a href="#sec-photos">现场掠影</a>
+    <a href="#sec-end">一锤定音</a>
+  </div>
+  <div class="meta">2026.05.22 · 周五 10:00</div>
+</nav>
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="deck">
+
+  <!-- =============== 1. COVER =============== -->
+  <section id="sec-cover" class="slide cover">
+    <div class="cover-top">
+      <div class="brand"><strong>康信</strong>KANGXIN PARTNERS, P.C.</div>
+      <div class="badge">INTERNAL · 2026.05.22</div>
+    </div>
+
+    <div>
+      <div class="cover-eyebrow">INTA 2026 · LONDON · 总结分享</div>
+      <h1 class="cover-title">
+        INTA 2026 <span class="accent">London</span><br>
+        康信<span class="accent">总结会</span>
+      </h1>
+      <p class="cover-sub">
+        一场年会，照见一个时代 —— 全球品牌资产治理，进入新周期。
+      </p>
+
+      <div class="cover-toc">
+        <div class="toc-row">
+          <span class="num">01</span>
+          <span class="lbl">行业价值被重新评估</span>
+          <span class="desc">市场信号：三大拐点、四个开放命题</span>
+        </div>
+        <div class="toc-row">
+          <span class="num">02</span>
+          <span class="lbl">康信经营答卷</span>
+          <span class="desc">客户 · 产品 · 渠道 三大资产</span>
+        </div>
+        <div class="toc-row">
+          <span class="num">03</span>
+          <span class="lbl">现场切片 · 一锤定音</span>
+          <span class="desc">筹备主线 · 现场掠影 · 战略选择</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cover-meta">
+      <div>
+        <div class="label">会议时间</div>
+        <div class="value">2026.05.22 · 周五 10:00</div>
+      </div>
+      <div>
+        <div class="label">线下会议室</div>
+        <div class="value">16 大会议室</div>
+      </div>
+      <div>
+        <div class="label">线上同步</div>
+        <div class="value">会畅会议 375 581 9124</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== 大数据开场 =============== -->
+  <section id="sec-bigdata" class="slide">
+
+    <!-- PART 01 · 大标识 -->
+    <div class="part-banner">
+      <div class="pb-num">01</div>
+      <div class="pb-mid">
+        <div class="pb-label">PART ONE · INDUSTRY REPRICING</div>
+        <div class="pb-title">行业价值<span class="accent">被重新评估</span></div>
+        <div class="pb-sub">市场信号：三大拐点、四个开放命题 —— 伦敦年会透露了什么。</div>
+      </div>
+      <div class="pb-tag">PART · 01 / 03</div>
+    </div>
+
+    <div class="slide-header">
+      <div>
+        <div class="eyebrow">1.1 · MARKET RADAR</div>
+        <h2 class="slide-title">INTA 伦敦年会释放的全球 IP 市场信号</h2>
+        <p class="slide-subtitle">基于 INTA 官方参会数据、Leaders League 现场报道及 Law.asia 引用信息整理</p>
+      </div>
+      <div class="pagenum">1.1</div>
+    </div>
+
+    <div class="slide-body">
+
+      <!-- HERO HEADLINE NUMBERS -->
+      <div class="bd-hero">
+        <div class="bd-hero-card">
+          <div class="bd-hero-num"><span class="v">9,800</span><span class="plus">+</span></div>
+          <div class="bd-hero-lbl">注册参会人数</div>
+          <div class="bd-hero-sub">官方截至 5/2 已破 9,800 人 · 创历史新高</div>
+          <a class="src-link" href="INTA2026_数据明细.html#d-9800" target="_blank" rel="noopener noreferrer" title="打开明细页 · 查看 5,000 → 9,800 的增长轨迹">查看明细 →</a>
+        </div>
+        <div class="bd-hero-card">
+          <div class="bd-hero-num"><span class="v">145</span></div>
+          <div class="bd-hero-lbl">司法管辖区</div>
+          <div class="bd-hero-sub">较 2025 年扩大 · 真正意义的"全球地图"</div>
+          <a class="src-link" href="INTA2026_数据明细.html#d-145" target="_blank" rel="noopener noreferrer" title="打开明细页 · 查看 125 → 145 的扩张节点">查看明细 →</a>
+        </div>
+        <div class="bd-hero-card">
+          <div class="bd-hero-num"><span class="v">882</span></div>
+          <div class="bd-hero-lbl">企业法务参会人</div>
+          <div class="bd-hero-sub">来自 507 家企业 · 含 199 位政府监管代表</div>
+          <a class="src-link" href="INTA2026_数据明细.html#d-882" target="_blank" rel="noopener noreferrer" title="打开明细页 · 按行业拆解到场企业">查看明细 →</a>
+        </div>
+        <div class="bd-hero-card">
+          <div class="bd-hero-num"><span class="v">148</span><span class="plus"><sup>th</sup></span></div>
+          <div class="bd-hero-lbl">届年会</div>
+          <div class="bd-hero-sub">伦敦 ExCeL · 上一次驻欧洲是 2023 新加坡前的转折点</div>
+          <a class="src-link" href="INTA2026_数据明细.html#d-148" target="_blank" rel="noopener noreferrer" title="打开明细页 · 144-148 届主办城市与人数对比">查看明细 →</a>
+        </div>
+      </div>
+
+      <!-- TWO HALVES: REGION CHART + TOP JURISDICTIONS -->
+      <div class="bd-grid2">
+        <div class="bd-block">
+          <h3 class="bd-h3"><span class="bar"></span>参会人地区分布</h3>
+
+          <div class="rg-summary">
+            <strong>9,800+</strong>
+            <span>注册参会</span>
+            <span class="sep"></span>
+            <strong>145</strong>
+            <span>司法管辖区</span>
+            <span class="sep"></span>
+            <span>欧洲首次过 1/3</span>
+          </div>
+
+          <!-- 单条 100% 堆叠柱：四区一目了然 -->
+          <div class="rg-stack">
+            <div class="seg eu" style="width:35%" title="欧洲 35%"></div>
+            <div class="seg na" style="width:26%" title="北美 26%"></div>
+            <div class="seg ap" style="width:22%" title="亚太 22%"></div>
+            <div class="seg ot" style="width:17%" title="其它地区 17%"></div>
+          </div>
+          <div class="rg-stack-axis">
+            <span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span>
+          </div>
+
+          <!-- 四块区域明细：色点 + 区域 + 占比 + 主要管辖区 -->
+          <div class="rg-grid">
+            <div class="rg-chip eu">
+              <div class="rh"><span class="dot"></span><span class="name">欧洲</span><span class="pct">35%</span></div>
+              <div class="sub">UK · DE · NL · FR · IT</div>
+            </div>
+            <div class="rg-chip na">
+              <div class="rh"><span class="dot"></span><span class="name">北美</span><span class="pct">26%</span></div>
+              <div class="sub">US · CA</div>
+            </div>
+            <div class="rg-chip ap">
+              <div class="rh"><span class="dot"></span><span class="name">亚太</span><span class="pct">22%</span></div>
+              <div class="sub">CN · JP · KR · IN · SG</div>
+            </div>
+            <div class="rg-chip ot">
+              <div class="rh"><span class="dot"></span><span class="name">其它地区</span><span class="pct">17%</span></div>
+              <div class="sub">LATAM · MEA · AU / NZ</div>
+            </div>
+          </div>
+
+          <p class="bd-note">
+            <strong>选址即信号 ——</strong>
+            欧洲 35% 是十年来最高的一次。伦敦作为东道主，把 <strong>UK / DE / NL / FR / IT</strong> 系列事务所集中推到了同一动线，是中国所近距离接触欧洲合作所的一次窗口。
+          </p>
+          <a class="src-link" href="INTA2026_数据明细.html#d-region" target="_blank" rel="noopener noreferrer" title="打开明细页 · 35/26/22/17 折算成具体人数">查看明细 →</a>
+        </div>
+
+        <div class="bd-block">
+          <h3 class="bd-h3"><span class="bar"></span>Top 5 代表司法管辖区</h3>
+          <ol class="bd-rank">
+            <li>
+              <span class="r">1</span>
+              <span class="c"><strong>United States · 2,101 人</strong><em>北美核心买家 · 长期排名第一</em></span>
+              <span class="flag"><img src="https://flagcdn.com/us.svg" alt="美国国旗" loading="lazy"></span>
+              <span class="f">US</span>
+              <a class="go" href="INTA2026_数据明细.html#d-top5-us" target="_blank" rel="noopener noreferrer" title="查看美国到场具体数字 · 在新页面打开">→</a>
+            </li>
+            <li>
+              <span class="r">2</span>
+              <span class="c"><strong>United Kingdom · 757 人</strong><em>主场效应 · 几乎所有 UK Top 30 所派出代表团</em></span>
+              <span class="flag"><img src="https://flagcdn.com/gb.svg" alt="英国国旗" loading="lazy"></span>
+              <span class="f">GB</span>
+              <a class="go" href="INTA2026_数据明细.html#d-top5-uk" target="_blank" rel="noopener noreferrer" title="查看英国到场具体数字 · 在新页面打开">→</a>
+            </li>
+            <li>
+              <span class="r highlight">3</span>
+              <span class="c"><strong>China · 597 人</strong><em>跻身 Top 3 · 占总数 6.1%</em></span>
+              <span class="flag"><img src="https://flagcdn.com/cn.svg" alt="中国国旗" loading="lazy"></span>
+              <span class="f">CN</span>
+              <a class="go highlight" href="INTA2026_数据明细.html#d-top5-cn" target="_blank" rel="noopener noreferrer" title="查看中国到场具体数字 · 在新页面打开">→</a>
+            </li>
+            <li>
+              <span class="r">4</span>
+              <span class="c"><strong>Germany</strong><em>专利与品牌并重 · 欧洲第二极</em></span>
+              <span class="flag"><img src="https://flagcdn.com/de.svg" alt="德国国旗" loading="lazy"></span>
+              <span class="f">DE</span>
+              <a class="go" href="INTA2026_数据明细.html#d-top5-de" target="_blank" rel="noopener noreferrer" title="查看德国到场具体数字 · 在新页面打开">→</a>
+            </li>
+            <li>
+              <span class="r">5</span>
+              <span class="c"><strong>India</strong><em>占 APAC 注册 ~20% · 跨境侵权需求高</em></span>
+              <span class="flag"><img src="https://flagcdn.com/in.svg" alt="印度国旗" loading="lazy"></span>
+              <span class="f">IN</span>
+              <a class="go" href="INTA2026_数据明细.html#d-top5-in" target="_blank" rel="noopener noreferrer" title="查看印度到场具体数字 · 在新页面打开">→</a>
+            </li>
+          </ol>
+          <p class="bd-note">
+            <strong>中国跃升的两面性 ——</strong>
+            排名跃升是明确信号——中国所与企业 IP 团队在国际场合的密度持续上升。<br>
+            同时也要看到：<strong>绝对占比仍属小众（不到 7%）</strong>，而 Top 3 里美 + 英合计接近 30%，<strong>行业"注意力重心"短期内仍在英美侧</strong>。
+            <br><br>
+            <span style="color:var(--muted); font-size:.82rem;">
+              数据来源：Leaders League 2026-05-02 现场报道（<a class="cite-inline" href="INTA2026_数据明细.html#src-l1" target="_blank" rel="noopener noreferrer">L1</a>）· Law.asia 引用 INTA 官方（<a class="cite-inline" href="INTA2026_数据明细.html#src-l12" target="_blank" rel="noopener noreferrer">L12</a>）。
+            </span>
+          </p>
+          <a class="src-link" href="INTA2026_数据明细.html#d-top5" target="_blank" rel="noopener noreferrer" title="打开明细页 · 含INTA官方逐国人数披露">查看明细 →</a>
+        </div>
+      </div>
+
+      <!-- HEAVYWEIGHT BRANDS -->
+      <div class="bd-block" style="margin-top: 32px;">
+        <h3 class="bd-h3"><span class="bar"></span>到场的"重量级品牌方"</h3>
+        <div class="bd-brands">
+          <span>Amazon</span><span>Apple</span><span class="cn">ByteDance</span><span class="cn">Tencent</span><span class="cn">Huawei</span><span class="cn">Haier</span>
+          <span>Meta</span><span>Microsoft</span><span>HP</span><span>Qualcomm</span><span>Ericsson</span>
+          <span>Johnson &amp; Johnson</span><span>Novartis</span><span>Unilever</span><span>Chanel</span>
+          <span>Starbucks</span><span>Uber</span><span>Expedia</span><span>Maersk</span><span>Rolls-Royce</span>
+          <span>British American Tobacco</span><span>BAE Systems</span><span>Fortnum &amp; Mason</span><span>Johnston of Elgin</span>
+        </div>
+        <p class="bd-note">
+          <strong>信号读取 ——</strong>
+          中国头部品牌（<strong>字节、腾讯、华为、海尔</strong>）齐聚现场，意味着<strong>"中国企业出海 + 海外 IP 服务采购"已成 INTA 常态话题</strong>，而不是 side topic。这正是中国所切入对接的核心场域。
+        </p>
+        <a class="src-link" href="INTA2026_数据明细.html#d-507" target="_blank" rel="noopener noreferrer" title="打开明细页 · 507 家企业的哑铃结构拆解">查看明细 →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =============== 02 · 三大不可逆拐点 =============== -->
+  <section id="sec-trends" class="slide">
+    <div class="slide-header">
+      <div>
+        <div class="eyebrow">1.2 · INDUSTRY INFLECTION POINTS</div>
+        <h2 class="slide-title">三个不可逆拐点：IP 服务的竞争逻辑正在被重写</h2>
+        <p class="slide-subtitle">从 AI、财务视角到全球规则参与，IP 行业正在从"案件交付"走向"技术化、资产化、国际化"能力竞争。</p>
+      </div>
+      <div class="pagenum">1.2</div>
+    </div>
+
+    <div class="slide-body">
+
+      <!-- TREND 1: AI -->
+      <div class="trend-block">
+        <div>
+          <div class="t-num">01</div>
+        </div>
+        <div>
+          <h3>AI 从效率工具变成采购门槛
+            <span class="sub-h">→ 产业生产率曲线被重写，<strong>AI 能力将决定未来 3 年的护城河</strong></span>
+          </h3>
+          <div class="t-body">
+            <p>
+              AI 已经不再是"<strong>加分项</strong>"，而是企业选择 IP 服务商时的<strong>新准入条件</strong>。无论是商标检索、监测、申请流程，还是答辩、组合管理与重复性文书处理，AI 正在压缩传统服务的时间成本，并推动客户重新评估服务商的<strong>交付效率、数据能力和标准化水平</strong>。
+            </p>
+            <div class="trend-evidence">
+              <div class="ev-box evidence">
+                <div class="ev-tag">EVIDENCE</div>
+                <p>AI 办公预订量创历史新高；Anaqua、Clarivate、Corsearch、Specifio 等 IP 工具厂商估值较 2023 年显著提升；AI 在商标检索、监测、申请流程、答辩等场景中已可压缩大量重复性工作。</p>
+              </div>
+              <div class="ev-box implication">
+                <div class="ev-tag">行业含义</div>
+                <p>客户的问题已经从"<strong>你是否会用 AI</strong>"转为"<strong>你用哪一个 AI 跑商标、检索、监测、说无效理由、写答辩</strong>"。AI 产品、节点工时、交付标准和结果校验，将成为未来 IP 服务方案的标配栏目。</p>
+              </div>
+            </div>
+            <div class="ev-box opportunity">
+              <div class="ev-tag">可强化为康信机会</div>
+              <p>康信需要把 AI 能力包装成<strong>客户可感知、可采购、可复用的服务模块</strong>，而不是只停留在内部提效。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TREND 2: C-SUITE -->
+      <div class="trend-block">
+        <div>
+          <div class="t-num">02</div>
+        </div>
+        <div>
+          <h3>IP 从成本项变成战略资产
+            <span class="sub-h">→ 企业购买 IP 服务的核心指标，正在从<strong>"少花钱"</strong>转向<strong>"守住市场与确定性"</strong></span>
+          </h3>
+          <div class="t-body">
+            <p>
+              IP 不再只是法务部门的成本中心，而是影响企业<strong>市场份额、出海风险、IPO 路径、品牌安全和竞争壁垒</strong>的战略资产。客户真正购买的不是"案件数量"，而是<strong>更低的商业不确定性、更强的市场排他性，以及面向资本市场和全球竞争的风险隔离能力</strong>。
+            </p>
+            <div class="trend-evidence">
+              <div class="ev-box evidence">
+                <div class="ev-tag">EVIDENCE</div>
+                <p>来自政府监管、企业法务、家族企业及多家重资产、重创新企业的代表共同参与讨论；BAE、Rolls-Royce、Maersk、J&amp;J、Novartis 等企业案例均体现出 IP 与业务战略、财务价值、风险管理之间的强关联。</p>
+              </div>
+              <div class="ev-box implication">
+                <div class="ev-tag">行业含义</div>
+                <p>客户不再只问"<strong>做了多少件案子</strong>"，而是问"<strong>帮我守住多少市场份额、让 IPO 顺过、让一笔并购不踩雷</strong>"。IP 服务商的报价逻辑也会从"案件报价"走向"<strong>风险隔离 + 商业价值证明</strong>"。</p>
+              </div>
+            </div>
+            <div class="ev-box opportunity">
+              <div class="ev-tag">可强化为康信机会</div>
+              <p>康信可以把传统服务升级为"<strong>IP 资产管理 + 商业风险控制 + 出海合规支持</strong>"的组合型方案，提升客户对高价值服务的支付意愿。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TREND 3: CHINA RISE -->
+      <div class="trend-block">
+        <div>
+          <div class="t-num">03</div>
+        </div>
+        <div>
+          <h3>中国从"参会者"升级为"规则共建者"
+            <span class="sub-h">→ 中国 IP 团队正在从<strong>国际规则的学习者</strong>，走向<strong>议题设置者与规则贡献者</strong></span>
+          </h3>
+          <div class="t-body">
+            <p>
+              中国企业的全球化已经进入深水区，中国 IP 服务不再只是帮助客户完成海外申请和维权，而是要<strong>参与全球规则讨论、理解国际审查趋势、影响跨境争议解决路径</strong>，并为中国企业出海提供更主动的战略支撑。
+            </p>
+            <div class="trend-evidence">
+              <div class="ev-box evidence">
+                <div class="ev-tag">EVIDENCE</div>
+                <p>中国参会人数达 <strong>597 人</strong>，仅次于美国 2,101 人；中国企业和机构在 INTA 等国际平台中的参与度持续提升；中国头部企业及 IP 负责人开始进入国际组织和公开讨论场域。</p>
+              </div>
+              <div class="ev-box implication">
+                <div class="ev-tag">行业含义</div>
+                <p>中国企业出海已进入深水区，中国 IP 行业也迎来了从"<strong>执行型服务</strong>"向"<strong>全球战略型服务</strong>"升级的关键窗口。未来竞争不只是"能不能做海外申请"，而是"<strong>能不能参与规则、理解规则、影响规则</strong>"。</p>
+              </div>
+            </div>
+            <div class="ev-box opportunity">
+              <div class="ev-tag">可强化为康信机会</div>
+              <p>康信应把自身定位从"中国客户的海外代理协作方"，升级为"<strong>中国企业全球 IP 战略的规则接口与专业基础设施</strong>"。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =============== 03 · 四个开放命题 =============== -->
+  <section id="sec-frame" class="slide">
+    <div class="slide-header">
+      <div>
+        <div class="eyebrow">1.3 · FOUR OPEN QUESTIONS</div>
+        <h2 class="slide-title">INTA 2026：四个仍待回答的问题</h2>
+        <p class="slide-subtitle">
+          热议很多，结论很少。这四个问题，正在重塑 IP 服务行业的未来边界。
+        </p>
+      </div>
+      <div class="pagenum">1.3</div>
+    </div>
+
+    <div class="slide-body">
+      <div class="frame-grid">
+        <div class="q-card">
+          <div class="q-num">01 ｜ 技术边界</div>
+          <h4>AI 接管大量执行工作后，<br>律师还能为什么收费？</h4>
+        </div>
+        <div class="q-card">
+          <div class="q-num">02 ｜ 价值重构</div>
+          <h4>当 IP 决策进入董事会，<br>律所还只是"法律服务商"吗？</h4>
+        </div>
+        <div class="q-card">
+          <div class="q-num">03 ｜ 规则话语权</div>
+          <h4>下一轮国际 IP 规则制定中，<br>中国是"被定义者"，还是"共同塑造者"？</h4>
+        </div>
+        <div class="q-card">
+          <div class="q-num">04 ｜ 资本入口</div>
+          <h4>外部资本进入 IP 服务行业，<br>问题是"会不会"，还是"如何进"？</h4>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: 28px;">
+        <strong>为什么是这四个？</strong>
+        <strong>技术、价值、地缘、资本</strong>，分别对应行业未来 5–10 年最底层的四个变量。四个一起看，才可能看清全貌；少一个，判断就会有盲区。
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== PART 2 · 康信经营答卷 =============== -->
+  <!-- ============ 04 · Part 2 封面 + 2.1 五大核心指标 ============ -->
+  <section id="sec-part2" class="slide p2-slide">
+
+    <!-- PART 02 · 大标识 -->
+    <div class="part-banner">
+      <div class="pb-num">02</div>
+      <div class="pb-mid">
+        <div class="pb-label">PART TWO · BUSINESS ANSWER · KANGXIN READOUT</div>
+        <div class="pb-title">康信<span class="accent">经营答卷</span><span class="sep">——</span>客户 · 产品 · 渠道 三大资产</div>
+        <div class="pb-sub">把"参会"沉淀为"经营资产" —— 围绕 <strong>客户结构 · 产品定位 · 渠道布局</strong> 三条主线。</div>
+      </div>
+      <div class="pb-tag">PART · 02 / 03</div>
+    </div>
+
+    <div class="p2-sec-label"><span class="num">2.1</span><span class="label-text">康信成果总览 · 5 大核心指标</span></div>
+
+    <p class="p2-lead">
+      从 <span class="blue">224 场会谈</span>中，<br>看见康信的 <span class="em-ink">客户资产、渠道资产与产品机会</span>。
+    </p>
+    <p class="p2-bigstat-desc" style="margin-top: -16px;">
+      以会议数据为入口，识别<strong>客户结构、产品需求与渠道机会</strong>，沉淀康信可复用的经营资产。
+    </p>
+
+    <div class="p2-logic-chain">
+      <span class="step">规模触达</span>
+      <span class="arrow">→</span>
+      <span class="step">客户沉淀</span>
+      <span class="arrow">→</span>
+      <span class="step">全球覆盖</span>
+      <span class="arrow">→</span>
+      <span class="step">直客突破</span>
+      <span class="arrow">→</span>
+      <span class="step">AI 机会</span>
+    </div>
+
+    <div class="p2-metric-grid">
+      <div class="p2-metric">
+        <div class="m-head"><span class="m-name">高频触达</span><span class="m-code">M.01</span></div>
+        <div class="m-val">224<span class="u">场</span></div>
+        <div class="m-caption">有效会谈</div>
+        <span class="m-tag">▲ 日均约 45 场高强度触达</span>
+        <div class="m-note">
+          <span class="line"><span class="label">口径</span>由 235 条纪要清洗去重，剔除 10 条重复 + 1 条会前电话。</span>
+          <span class="line"><span class="label">含义</span>现场覆盖密度位列中国所第一梯队。</span>
+        </div>
+      </div>
+      <div class="p2-metric">
+        <div class="m-head"><span class="m-name">客户池沉淀</span><span class="m-code">M.02</span></div>
+        <div class="m-val">219<span class="u">家</span></div>
+        <div class="m-caption">独立客户</div>
+        <span class="m-tag">▲ 一周触达全球约 1/3 关键节点</span>
+        <div class="m-note">
+          <span class="line"><span class="label">口径</span>以海外律所网络为主体，含 24 家直客 / 终端客户。</span>
+          <span class="line"><span class="label">含义</span>一周时间扫遍全球 1/3 关键 IP 服务节点。</span>
+        </div>
+      </div>
+      <div class="p2-metric">
+        <div class="m-head"><span class="m-name">全球网络覆盖</span><span class="m-code">M.03</span></div>
+        <div class="m-val">43<span class="u">国 / 地区</span></div>
+        <div class="m-caption">覆盖五大洲</div>
+        <span class="m-tag">▲ 全球化触达格局</span>
+        <div class="m-note">
+          <span class="line"><span class="label">口径</span>按客户注册地或主营市场归口统计。</span>
+          <span class="line"><span class="label">含义</span>欧洲为主要市场，亚太为第二梯队。</span>
+        </div>
+      </div>
+      <div class="p2-metric">
+        <div class="m-head"><span class="m-name">战略客户接近</span><span class="m-code">M.04</span></div>
+        <div class="m-val">24<span class="u">家</span></div>
+        <div class="m-caption">直客 / 终端客户</div>
+        <span class="m-tag">★★★★★ 战略级触达</span>
+        <div class="m-note">
+          <span class="line"><span class="label">口径</span>欧洲 19 + 亚太 3 + 北美及其它 2。</span>
+          <span class="line"><span class="label">含义</span>含多家头部品牌，是未来 1-2 年最大转化池。</span>
+        </div>
+      </div>
+      <div class="p2-metric">
+        <div class="m-head"><span class="m-name">AI 需求显性化</span><span class="m-code">M.05</span></div>
+        <div class="m-val">26.4<span class="u">%</span></div>
+        <div class="m-caption">AI 议题渗透率</div>
+        <span class="m-tag">▲ 139 次提及 · 正在成为必答题</span>
+        <div class="m-note">
+          <span class="line"><span class="label">口径</span>AI 主题在 224 场会谈中的出现频次占比。</span>
+          <span class="line"><span class="label">含义</span>平均每 4 场会议中约 1 场涉及 AI 相关讨论。</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ 05 · 客户结构 · 欧洲直客的密集突破 ============ -->
+  <section id="sec-part2-clients" class="slide p2-slide">
+    <div class="p2-sec-label"><span class="num">2.2</span><span class="label-text">客户资产 · 欧洲直客的密集突破</span></div>
+
+    <h2 class="p2-bigstat">
+      <span class="blue">欧洲</span>成为直客突破的核心战场：<br>24 家直客对话，<span class="blue">19 家来自欧洲</span>。
+    </h2>
+    <p class="p2-bigstat-desc">
+      本届最具战略价值的变化，不是会面数量的增长，而是<strong>客户结构的升级</strong> —— 欧洲正在成为未来 1–2 年"<strong>从代理网络走向直客关系</strong>"的最大机会池。
+    </p>
+
+    <div class="p2-struct-grid">
+      <div class="p2-region-chart">
+        <div class="axis-label"><span>地域分布 · Y-AXIS: 场数</span><span class="right">0 ——— 120</span></div>
+
+        <div class="p2-region-row eu">
+          <span class="reg">欧洲</span>
+          <div class="track"><div class="fill" style="width: 92.5%"></div></div>
+          <span class="val">111<span class="pct">49.6%</span></span>
+        </div>
+        <div class="p2-region-row ap">
+          <span class="reg">亚太</span>
+          <div class="track"><div class="fill" style="width: 45.8%"></div></div>
+          <span class="val">55<span class="pct">24.6%</span></span>
+        </div>
+        <div class="p2-region-row na">
+          <span class="reg">北美</span>
+          <div class="track"><div class="fill" style="width: 21.7%"></div></div>
+          <span class="val">26<span class="pct">11.6%</span></span>
+        </div>
+        <div class="p2-region-row la">
+          <span class="reg">拉美</span>
+          <div class="track"><div class="fill" style="width: 16.7%"></div></div>
+          <span class="val">20<span class="pct">8.9%</span></span>
+        </div>
+        <div class="p2-region-row me">
+          <span class="reg">中东 / 非洲</span>
+          <div class="track"><div class="fill" style="width: 10%"></div></div>
+          <span class="val">12<span class="pct">5.4%</span></span>
+        </div>
+      </div>
+
+      <div class="p2-brand-box">
+        <div class="p2-brand-head">欧洲直客 / 准直客 19 家 · 形成三层机会结构</div>
+        <div class="p2-brand-list">
+          <strong>品牌方 ——</strong> Dior · LVMH <span class="pa">(Givenchy · Kenzo · Pucci · TAG Heuer)</span> · Bulgari · Karl Lagerfeld · OTB <span class="pa">(Diesel · Maison Margiela · Marni · Jil Sander)</span> · Ferrari · Johnson Controls · DSM · BAT<br><br>
+          <strong>IP 服务商 ——</strong> Clarivate · Anaqua · Questel<br><br>
+          <strong>合作律所中的中国业务接口 ——</strong> Venner Shipley · NLO · SSPM · FOVEA IP
+        </div>
+        <p class="p2-brand-warn">
+          <strong>需要补齐：</strong>北美虽有 <strong>27 家律所</strong>触点，但<strong>直客对话接近空白</strong> —— 应作为 INTA 2027 前的重点突破区域。
+        </p>
+      </div>
+    </div>
+
+    <h3 class="p2-stk-title">本届形成的三类高价值客户资产</h3>
+
+    <div class="p2-stack-row">
+      <span class="stk-num">01</span>
+      <div class="stk-body">
+        <div class="stk-h">欧洲企业法务决策层开始渗透</div>
+        <div class="stk-desc">与多家欧洲跨国企业的商标 / IP 负责人建立一线对话，部分触点已进入具体项目讨论阶段。</div>
+      </div>
+      <div class="stk-side">19 家欧洲直客触点<br>部分进入项目级沟通</div>
+    </div>
+
+    <div class="p2-stack-row">
+      <span class="stk-num">02</span>
+      <div class="stk-body">
+        <div class="stk-h">代理网络从"入境来源"升级为"双向转介网络"</div>
+        <div class="stk-desc">本届代理所触点不仅继续承接"中国所 → 海外"的入境业务，也开始打开"海外所 → 中国代理"的反向合作通道。</div>
+      </div>
+      <div class="stk-side">204 家律所触点<br>双向转介价值显现</div>
+    </div>
+
+    <div class="p2-stack-row">
+      <span class="stk-num">03</span>
+      <div class="stk-body">
+        <div class="stk-h">新兴市场提前卡位，形成出海网络入口</div>
+        <div class="stk-desc">拉美、中东、东南亚的代理网络正在成为中国企业下一波出海布局的重要入口，应提前沉淀为区域型合作资产。</div>
+      </div>
+      <div class="stk-side">43 家新兴市场触点<br>覆盖拉美 / 中东 / 东南亚</div>
+    </div>
+
+    <div class="p2-readout">
+      <div class="ro-eyebrow">经营观察 · CLIENT STRUCTURE READOUT</div>
+      <p><strong>核心判断：</strong>本届欧洲直客突破，标志着康信的国际化客户资产开始从"<strong>代理网络驱动</strong>"转向<span class="hl">"代理网络 + 直客关系"双轮驱动</span>。</p>
+    </div>
+  </section>
+
+
+  <!-- ============ Part 2 · 2.3 产品资产 ============ -->
+  <section id="sec-part2-product" class="slide p2-slide">
+    <div class="p2-sec-label"><span class="num">2.3</span><span class="label-text">产品资产 · 平台 + AI + 行业纵深的三位一体</span></div>
+
+    <h2 class="p2-bigstat">
+      产品定位正在升级 ——<br>
+      从"法律服务交付"，到 <span class="blue">"可复用的 IP 资产组合"</span>。
+    </h2>
+    <p class="p2-bigstat-desc">
+      当 AI 接管大量基础工时后，客户真正愿意付费的，将不再是"人力投入"，而是由<strong>平台、AI 合规方法论和行业经验</strong>沉淀形成的<strong>可复用资产</strong>。
+    </p>
+
+    <div class="p2-asset-grid">
+      <div class="p2-asset-card">
+        <div class="a-head"><span class="a-tag">ASSET 01 · AI 合规</span><span class="a-num">签约门槛</span></div>
+        <div class="a-name">AI 合规边界，正在成为客户签约前置条件</div>
+        <div class="a-desc">
+          客户问的已不只是"<strong>有没有 AI</strong>"，而是：AI 用在哪里、数据如何隔离、责任边界如何定义、交付结果如何复核。
+        </div>
+        <div class="a-quote">AI 合规不应只是工具说明，而应成为标准化的客户信任资产。</div>
+      </div>
+
+      <div class="p2-asset-card">
+        <div class="a-head"><span class="a-tag">ASSET 02 · 平台</span><span class="a-num">34 次主动推介</span></div>
+        <div class="a-name">平台、Portal 与 API，正在从辅助工具变成战略接口</div>
+        <div class="a-desc">
+          康信平台已在现场被<strong>多次主动推介</strong>。对海外所而言，<strong>IT + API 对接能力</strong>不只是效率工具，而是判断一家中国 IP 服务机构是否具备长期协作能力的重要标准。
+        </div>
+        <div class="a-quote">IT + API 对接能力，已成为判断长期协作的重要标准。</div>
+      </div>
+
+      <div class="p2-asset-card">
+        <div class="a-head"><span class="a-tag">ASSET 03 · 全 IP</span><span class="a-num">专利 108 · 商标 100</span></div>
+        <div class="a-name">从"中国商标代理所"，升级为"中国全 IP 服务伙伴"</div>
+        <div class="a-desc">
+          外部认知正在变化：商标与专利需求接近均衡，客户也开始主动讨论<strong>专利策略、FTO、跨境许可和组合管理</strong>。
+        </div>
+        <div class="a-quote">康信的对外身份正在从单一代理能力，升级为综合 IP 服务伙伴。</div>
+      </div>
+
+      <div class="p2-asset-card">
+        <div class="a-head"><span class="a-tag">ASSET 04 · 双语</span><span class="a-num">中文 65 · 行业 40</span></div>
+        <div class="a-name">语言能力是基础，行业纵深才是商业壁垒</div>
+        <div class="a-desc">
+          海外所正在补强中文能力，单纯语言优势正在被稀释。
+        </div>
+        <div class="a-quote">康信真正可持续的壁垒，应升级为<strong>中国市场理解、行业判断与 IP 实务经验</strong>的复合能力。</div>
+      </div>
+    </div>
+
+    <div class="p2-readout">
+      <div class="ro-eyebrow">经营观察 · PRODUCT ASSET READOUT</div>
+      <p>产品定位锚点正在切换 —— 从"<strong>按件计费的法律服务</strong>"切换为"<strong>平台 + AI 白皮书 + 行业纵深</strong>"三位一体的可标准化资产组合。</p>
+    </div>
+  </section>
+
+
+  <!-- ============ Part 2 · 2.4 渠道资产 ============ -->
+  <section id="sec-part2-channel" class="slide p2-slide">
+    <div class="p2-sec-label"><span class="num">2.4</span><span class="label-text">渠道资产 · "全球双向通道运营者"网络进一步巩固</span></div>
+
+    <h2 class="p2-bigstat">
+      <span class="blue">"全球双向通道运营者"</span> 的位置进一步稳固。
+    </h2>
+    <p class="p2-bigstat-desc">
+      呼应 <strong>OQ03 · 地缘</strong>：中国从"参会者"升级为"规则共建者"——康信的位置是<strong>204 家律所网络</strong> · 欧洲 <strong>111 场（49.6%）</strong> · 拉美 / 中东 / 东南亚 <strong>43 场</strong>出海第二梯队入口。这是与其他中国所最大的资产位差。
+    </p>
+
+    <div class="p2-asset-grid">
+      <div class="p2-asset-card">
+        <div class="a-head"><span class="a-tag">CHANNEL 01 · 双向通道</span><span class="a-num">5+ 家明确合作意向</span></div>
+        <div class="a-name">出境与入境两条通道同步打开</div>
+        <div class="a-desc">
+          Lewis Silkin / BDSA / Brunet / Hindles / Bugnion 等多家海外所，已明确表达<strong>反向合作意愿</strong>。这意味着康信不只是把中国客户带出去，也正在成为海外所进入中国市场的可信入口。
+        </div>
+        <div class="a-quote">出境：中国客户走向海外 ｜ 入境：海外客户进入中国 —— 二者协同，构成康信的双向通道运营能力。</div>
+      </div>
+
+      <div class="p2-asset-card">
+        <div class="a-head"><span class="a-tag">CHANNEL 02 · 并购窗口</span><span class="a-num">7 家处于整合期</span></div>
+        <div class="a-name">行业格局重洗，正是切入新关系的窗口</div>
+        <div class="a-desc">
+          <strong>Questel、Clarivate、Dennemeyer、HGF、Zacco、MBIP、LexOrient</strong> 等机构，正在经历 PE 收购、平台化整合或业务重组。组织变化会带来代理关系松动：原有客户可能更换服务商，原有团队也可能拆分、流动或成立新平台。
+        </div>
+        <div class="a-quote">行业整合期，本质上是关系网络的重洗期。抓住这一轮窗口，康信有机会提前进入下一批核心合作关系。</div>
+      </div>
+
+      <div class="p2-asset-card">
+        <div class="a-head"><span class="a-tag">CHANNEL 03 · 弱关系网络</span><span class="a-num">海外华人 IP 网络</span></div>
+        <div class="a-name">康信独有的 soft power：可被激活的弱关系资产</div>
+        <div class="a-desc">
+          HGF 孙明慧、BARZANO Alessandra、LexOrient 前 Modet 团队，以及 HGF China Desk 等网络，说明海外所内部已经沉淀了一批熟悉中国、理解中国客户需求的 <strong>IP 人才</strong>。这些人脉不是传统意义上的正式联盟，却构成了康信连接海外市场的隐性资产。
+        </div>
+        <div class="a-quote">一旦被系统激活，这类弱关系网络往往比新设海外办公室更快形成有效触达。</div>
+      </div>
+
+      <div class="p2-asset-card">
+        <div class="a-head"><span class="a-tag">CHANNEL 04 · 新兴市场入口</span><span class="a-num">拉美 20+ · 中东 12 · 东南亚 11</span></div>
+        <div class="a-name">中国企业出海下一阶段的网络入口</div>
+        <div class="a-desc">
+          <strong>43 场</strong>新兴市场对接，集中指向中国企业出海的下一批增长区域：拉美电商、中东消费品、东南亚制造。这些市场不是欧洲主航道的替代，而是康信全球网络的<strong>第二增长扇面</strong>。
+        </div>
+        <div class="a-quote">欧洲是成熟主场，拉美 / 中东 / 东南亚是增量入口 —— 两个扇面同时展开，形成康信面向中国企业出海的全球服务布局。</div>
+      </div>
+    </div>
+
+    <div class="p2-readout">
+      <div class="ro-eyebrow">经营观察 · CHANNEL ASSET READOUT</div>
+      <p>康信正在以<strong>"全球双向通道运营者"</strong>而非"中国端代理"的身份立足牌桌。本届观察到的关键变化，不只是合作触点增加，而是<span class="hl">角色坐标升级</span> —— 康信一端承接中国企业出海需求，一端成为海外律所进入中国市场的可信入口。由此形成的，是<strong>可复用的市场入口、关系路由与跨区域协同能力</strong> —— 这正是康信区别于多数中国所的核心资产位差。</p>
+    </div>
+  </section>
+
+  <section id="sec-timeline" class="slide">
+
+    <!-- PART 03 · 大标识 -->
+    <div class="part-banner">
+      <div class="pb-num">03</div>
+      <div class="pb-mid">
+        <div class="pb-label">PART THREE · ONSITE SLICE · FINAL CALL</div>
+        <div class="pb-title">现场切片<span class="sep">·</span><span class="accent">一锤定音</span></div>
+        <div class="pb-sub">筹备主线 · 现场掠影 · 战略选择 —— 从 7 个月筹备到 6 天现场，再回到下一步要做的事。</div>
+      </div>
+      <div class="pb-tag">PART · 03 / 03</div>
+    </div>
+
+    <div class="slide-header">
+      <div>
+        <div class="eyebrow">3.1 · EXECUTION TIMELINE</div>
+        <h2 class="slide-title">从立项到收官 · 7 个月筹备主线</h2>
+        <p class="slide-subtitle">关键节点 & 责任部门可视化</p>
+      </div>
+      <div class="pagenum">3.1</div>
+    </div>
+
+    <div class="slide-body">
+      <div class="timeline">
+        <div class="tl-phases">
+          <span class="tl-phase prep">筹备期 · 7 个月</span>
+          <span class="tl-phase onsite">现场期 · 6 天</span>
+        </div>
+        <div class="timeline-row">
+          <div class="tl-item done">
+            <div class="tl-num">STAGE 01</div>
+            <div class="dot"></div>
+            <div class="date">2025.10</div>
+            <div class="title">立项启动</div>
+            <div class="desc">锁定 #711 展位</div>
+          </div>
+          <div class="tl-item done">
+            <div class="tl-num">STAGE 02</div>
+            <div class="dot"></div>
+            <div class="date">2025.12</div>
+            <div class="title">展位设计</div>
+            <div class="desc">Spiro 设计稿 Q22671-5</div>
+          </div>
+          <div class="tl-item done">
+            <div class="tl-num">STAGE 03</div>
+            <div class="dot"></div>
+            <div class="date">2026.02</div>
+            <div class="title">名单 &amp; 约见</div>
+            <div class="desc">参会人员 v1 · 客户约见模板</div>
+          </div>
+          <div class="tl-item done">
+            <div class="tl-num">STAGE 04</div>
+            <div class="dot"></div>
+            <div class="date">2026.03</div>
+            <div class="title">物料 &amp; 礼品</div>
+            <div class="desc">5 款伴手礼投票 · 展板内容定稿</div>
+          </div>
+          <div class="tl-item done">
+            <div class="tl-num">STAGE 05</div>
+            <div class="dot"></div>
+            <div class="date">2026.04</div>
+            <div class="title">行前会</div>
+            <div class="desc">值班排期 · 礼品采购 · 运输</div>
+          </div>
+          <div class="tl-item done onsite">
+            <div class="tl-num">STAGE 06</div>
+            <div class="dot"></div>
+            <div class="date">05.01–02</div>
+            <div class="title">展位搭建</div>
+            <div class="desc">2 天搭建 · Spiro 承建</div>
+          </div>
+          <div class="tl-item done onsite">
+            <div class="tl-num">STAGE 07</div>
+            <div class="dot"></div>
+            <div class="date">05.03–06</div>
+            <div class="title">会议执行</div>
+            <div class="desc">4 天值守 · 拆展 2 小时</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== 9. PHOTOS =============== -->
+  <section id="sec-photos" class="slide">
+    <div class="slide-header">
+      <div>
+        <div class="eyebrow">3.2 · ON SITE</div>
+        <h2 class="slide-title">现场掠影 · London 2026</h2>
+        <p class="slide-subtitle">从 72 张原始记录中精选 · 展位 / 团队 / 行业活动</p>
+      </div>
+      <div class="pagenum">3.2</div>
+    </div>
+
+    <div class="slide-body">
+      <div class="photo-grid">
+        <div class="photo wide">
+          <img src="微信图片_2026-05-06_135609_901.jpg" alt="展位首日" loading="lazy">
+          <div class="cap">展位首日 · ExCeL London</div>
+        </div>
+        <div class="photo">
+          <img src="微信图片_20260509163735.jpg" alt="外所拜访" loading="lazy">
+          <div class="cap">外所拜访 · 会后深度走访</div>
+        </div>
+        <div class="photo">
+          <img src="微信图片_2026-05-06_135701_463.jpg" alt="INTA 标志合影" loading="lazy">
+          <div class="cap">INTA 2026 · London</div>
+        </div>
+        <div class="photo">
+          <img src="微信图片_2026-05-06_135541_510.jpg" alt="客户洽谈" loading="lazy">
+          <div class="cap">客户洽谈</div>
+        </div>
+        <div class="photo">
+          <img src="微信图片_2026-05-06_135554_214.jpg" alt="国际同行交流" loading="lazy">
+          <div class="cap">国际同行交流</div>
+        </div>
+        <div class="photo">
+          <img src="微信图片_2026-05-06_135646_727.jpg" alt="重要客户接待" loading="lazy">
+          <div class="cap">重要客户接待</div>
+        </div>
+        <div class="photo">
+          <img src="微信图片_2026-05-06_135629_662.jpg" alt="展位值守" loading="lazy">
+          <div class="cap">展位值守</div>
+        </div>
+        <div class="photo">
+          <img src="微信图片_2026-05-06_135651_408.jpg" alt="海外客户洽谈" loading="lazy">
+          <div class="cap">海外客户洽谈</div>
+        </div>
+        <div class="photo">
+          <img src="微信图片_20260509162827.jpg" alt="外所合伙人晚宴" loading="lazy">
+          <div class="cap">外所合伙人晚宴 · 5 人深谈</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- =============== 11 · 一锤定音 =============== -->
+  <section id="sec-end" class="slide conclusion">
+    <div>
+      <div class="lead">CONCLUSION · 一锤定音</div>
+
+      <!-- 核心判断 -->
+      <div style="padding: 40px 44px; background: var(--paper); border-left: 4px solid var(--accent); border-radius: 8px; box-shadow: var(--shadow); margin-bottom: 40px;">
+        <div style="color: var(--accent); letter-spacing: 4px; font-size: .78rem; font-weight: 700; margin-bottom: 16px;">CORE TAKEAWAY · 核心判断</div>
+        <div style="font-size: 2rem; font-weight: 700; line-height: 1.45; color: var(--ink); letter-spacing: -.3px;">
+          全球品牌资产治理进入新周期 ——<br>
+          <span style="color: var(--accent);">技术 · 价值 · 地缘 · 资本</span> 四种力量首次在同一届年会汇合。<br>
+          康信 <span style="color: var(--accent);">"全球双向通道运营者"</span> 的位置进一步稳固。
+        </div>
+      </div>
+
+      <!-- 宏观收尾 -->
+      <div style="margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--line); text-align: left;">
+        <p style="font-size: 1.6rem; line-height: 1.55; color: var(--ink); font-weight: 500; letter-spacing: .2px; max-width: 900px;">
+          一届年会，照见一个时代 ——<br>
+          <span style="color: var(--accent); font-weight: 700;">康信的下一程，从这里开始。</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="signoff" style="margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; letter-spacing: 2px; text-align: center;">
+      KANGXIN PARTNERS · 国际销售 &amp; 品牌中心 · 2026.05.22 · <a href="INTA2026_数据明细.html" target="_blank" rel="noopener noreferrer" style="color:var(--accent); text-decoration:none; border-bottom: 1px dashed var(--accent);">查看完整数据明细 ↗</a>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  const progressBar = document.getElementById('progressBar');
+  if (progressBar) {
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement;
+      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)
